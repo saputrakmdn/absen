@@ -3,7 +3,6 @@
 <form method="post" action="{{ $delete_url }}">
     <input name="_token" type="hidden" value="{{ csrf_token() }}">
     <input type="hidden" name="_method" value="DELETE">
-
     <button type="submit" class="btn btn-danger"><span class="ti-trash"></span></button>
 </form> --}} {{-- {!! Form::submit('Delete', ['class'=>'btn btn-xs btn-danger']) !!} --}}
 <button type="submit" class="btn btn-danger"><span class="ti-trash"></span></button>

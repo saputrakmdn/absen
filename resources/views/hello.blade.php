@@ -4,9 +4,9 @@
 <div class="content">
     <div class="container-fluid">
         <br><br>
-        <center><img src="{{ asset('asset/Admin/assets/img/uin.png') }}">
-            <h2 class="title">PTIPD UIN Sunan Gunung Djati</h2>
-            <p class="category">Jalan A.H. Nasution No. 105,Gedung Lecture Hall Lantai 2</p>
+        <center><img src="{{ asset('asset/Admin/assets/img/TKJ.png') }}">
+            <h2 class="title">PTIPD TKJ SMKN 5 Kab. Tangerang</h2>
+            <p class="category">Jl. Ir. Sutami Km.1,2, Mauk, Mauk Bar., Mauk, Tangerang, Banten 15330</p>
         </center>
         <br><br><br><br>
     </div>

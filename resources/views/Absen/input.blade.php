@@ -10,55 +10,16 @@
                 <br>
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Masukan Data Kehadiran</h4>
-                        <p class="category">Data Kehadiran Pegawai UIN Sunan Gunung Djati</p>
+                        <h4 class="title">Data Kehadiran</h4>
+                        <p class="category">Data Kehadiran Kelas {{$cok->nama_kelas}}</p>
                     </div>
                     <div class="panel pull-right">
-                    <a class="btn btn-info" data-toggle="modal" data-target="#masuk" ><span class="ti-alarm-clock"></span>&nbsp;Jam Masuk</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{-- <a class="btn btn-danger" data-toggle="modal" data-target="#keluar"><span class="ti-alarm-clock"></span>&nbsp;Jam Keluar</a> --}}
+                    <a class="btn btn-info" data-toggle="modal" data-target="#masuk" ><span class="ti-alarm-clock"></span>&nbsp;Tambah Keterangan</a>&nbsp;
+                    <a class="btn btn-info" href="{{route('excel', $cok->id)}}">Rekap Perhari</a>
+                    <a class="btn btn-info" href="{{route('excel.all', $cok->id)}}">Rekap Keseluruhan</a>&nbsp;
                     </div>
                     <div class="panel-body">
-                        {{--
-                        <form action="{{ route('absen.store') }}" method="post" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <div class="form-group {{ $errors->has('pegawai_id') ? 'has error' : '' }}">
-                                <label class="control-label">Pegawai</label>
-                                <select name="pegawai_id" class="form-control">
-                                    <option>-</option>
-                                    @foreach($pegawai as $data)
-                                    <option value="{{ $data->id }}">{{ $data->nama }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('pegawai'))
-                                <span class="help-block">
-								<strong>{{ $errors->first('pegawai') }}</strong>
-							</span> @endif
-                            </div>
-                            <div class="form-group {{ $errors->has('tanggal') ? ' has-error' : '' }}">
-                                <label class="control-label">Tanggal</label>
-                                <input type="date" name="tanggal" class="form-control" value="{{ carbon\carbon::today()->toDateString() }}" readonly> @if ($errors->has('tanggal'))
-                                <span class="help-block">
-                                <strong>{{ $errors->first('tanggal') }}</strong>
-                            </span> @endif
-                            </div>
-                            <div class="form-group {{ $errors->has('jam_masuk') ? ' has-error' : '' }}">
-                                <label class="control-label">Jam Masuk</label>
-                                <input type="time" name="jam_masuk" value="{{ carbon\carbon::now()->timezone('Asia/Jakarta')->format('H:i:s') }}" class="form-control" readonly> @if ($errors->has('jam_masuk'))
-                                <span class="help-block">
-                                <strong>{{ $errors->first('jam_masuk') }}</strong>
-                            </span> @endif
-                            </div>
-                            <div class="form-group {{ $errors->has('jam_keluar') ? ' has-error' : '' }}">
-                                <label class="control-label">Jam Keluar</label>
-                                <input type="time" name="jam_keluar" value="{{ carbon\carbon::now()->timezone('Asia/Jakarta')->format('H:i:s') }}" class="form-control" readonly> @if ($errors->has('jam_keluar'))
-                                <span class="help-block">
-                                <strong>{{ $errors->first('jam_keluar') }}</strong>
-                            </span> @endif
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary panel pull-right"><span class="ti-check"></span>&nbsp;Selesai</button>
-                            </div>
-                        </form> --}} 
+                        
                         {!! $html->table(['class'=>'table-striped']) !!}
                     </div>                    
                 </div>
@@ -74,38 +35,45 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Jam Masuk</h4>
+                <h4 class="modal-title">Tambah Absen</h4>
             </div>
             <div class="modal-body">
                 <form action="{{ route('absen.store') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
-                <div class="form-group {{ $errors->has('pegawai_id') ? 'has error' : '' }}">
-                        <label class="control-label">Pegawai</label>
-                        <select name="pegawai_id" class="form-control">
+                <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
+                        <label class="control-label">Siswa</label>
+                        <select name="siswa_id" class="form-control">
                             <option>-</option>
                             @foreach($pegawai as $data)
                             <option value="{{ $data->id }}">{{ $data->nama }}</option>
                             @endforeach
                         </select>
-                        @if ($errors->has('pegawai'))
+                        @if ($errors->has('siswa_id'))
                         <span class="help-block">
-                      <strong>{{ $errors->first('pegawai') }}</strong>
+                      <strong>{{ $errors->first('siswa_id') }}</strong>
                   </span> @endif
                     </div>
                 <div class="form-group {{ $errors->has('tanggal') ? ' has-error' : '' }}">
                     <label class="control-label">Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control" value="{{ carbon\carbon::today()->toDateString() }}" readonly> @if ($errors->has('tanggal'))
+                    <input type="text" name="tanggal" class="form-control" value="{{ carbon\carbon::today()->toDateString() }}" readonly> @if ($errors->has('tanggal'))
                     <span class="help-block">
                     <strong>{{ $errors->first('tanggal') }}</strong>
                 </span> @endif
             </div>
-            <div class="form-group {{ $errors->has('jam_masuk') ? ' has-error' : '' }}">
-                <label class="control-label">Jam Masuk</label>
-                <input type="time" name="jam_masuk" value="{{ carbon\carbon::now()->timezone('Asia/Jakarta')->format('H:i:s') }}" class="form-control" readonly> @if ($errors->has('jam_masuk'))
-                <span class="help-block">
-                <strong>{{ $errors->first('jam_masuk') }}</strong>
-            </span> @endif
-            </div>                   
+            <div class="form-group {{ $errors->has('keterangan') ? 'has error' : '' }}">
+                        <label class="control-label">Keterangan</label>
+                        <select name="keterangan" class="form-control">
+                            <option>-</option>
+                            <option value="alfa">Alfa</option>
+                            <option value="izin">Izin</option>
+                            <option value="sakit">Sakit</option>
+                        </select>
+                        @if ($errors->has('keterangan'))
+                        <span class="help-block">
+                      <strong>{{ $errors->first('keterangan') }}</strong>
+                  </span> @endif
+                    </div>
+                              
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary panel pull-right"><span class="ti-check"></span>&nbsp;Selesai</button>

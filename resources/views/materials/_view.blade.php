@@ -1,0 +1,1 @@
+<a class="btn btn-default" href="{{ $view_url }}"><span class="ti-eye"></span></a>

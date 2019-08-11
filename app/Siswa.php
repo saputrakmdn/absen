@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\Absen;
 use Illuminate\Database\Eloquent\Model;
 
 class Siswa extends Model
@@ -11,5 +11,8 @@ class Siswa extends Model
     public $timestamps = false;
     public function Kelas() {
         return $this->belongsTo('App\Kelas', 'kelas_id');
+    }
+    public function Absen() {
+        return $this->hasMany('App\Absen', 'siswa_id');
     }
 }

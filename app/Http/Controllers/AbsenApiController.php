@@ -17,8 +17,9 @@ class AbsenApiController extends Controller
     }
     public function absenMasuk(Request $request){
         $dt = Carbon::now()->toTimeString();
+        $time = base64_decode($request->tanggal);
         $absen = new Absen();
-        $absen->tanggal = $request->tanggal;
+        $absen->tanggal = $time;
         $absen->jam_masuk = $dt;
         $absen->siswa_id = $request->id;
         $absen->kelas_id = $request->kelas;

@@ -8,7 +8,7 @@
     <div class="sidebar-wrapper">
         <div class="logo">
             <a href="{{ route('home') }}" class="simple-text">
-                <img src="{{ asset('asset/Admin/assets/img/uin.png') }}" width="40px" height="40px"> PTIPD UIN SGD
+                <img src="{{ asset('asset/Admin/assets/img/TKJ.png') }}" width="40px" height="40px"> PTIPD TKJ SMKN5
             </a>
         </div>
 
@@ -20,9 +20,9 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('absen.input') }}">
+                <a href="{{ route('absen.kelas') }}">
                     <i class="ti-view-list"></i>
-                    <p>Absen</p>
+                    <p>Rekap Absen</p>
                 </a>
             </li>
             <li>

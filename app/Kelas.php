@@ -12,4 +12,7 @@ class Kelas extends Model
     public function Siswa() {
         return $this->hasMany('App\Siswa', 'kelas_id');
     }
+    public function Absen(){
+        return $this->hasMany('App\Absen', 'kelas_id');
+    }
 }

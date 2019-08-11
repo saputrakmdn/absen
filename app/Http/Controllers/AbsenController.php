@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Absen;
-use App\Pegawai;
+use App\Siswa;
+use App\Kelas;
+use Carbon\Carbon;
+use Excel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Builder;
 use Yajra\Datatables\Datatables;
@@ -25,25 +28,26 @@ class AbsenController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $absen = Absen::with('pegawai');
+            $absen = Absen::with('siswa', 'kelas');
             return Datatables::of($absen)->make(true);
             }
             $html = $htmlBuilder
-            ->addColumn(['data' => 'pegawai.nip', 'name'=>'pegawai.nip', 'title'=>'NIP'])
-            ->addColumn(['data' => 'pegawai.nama', 'name'=>'pegawai.nama', 'title'=>'Pegawai'])
+            ->addColumn(['data' => 'siswa.nis', 'name'=>'siswa.nis', 'title'=>'NIP'])
+            ->addColumn(['data' => 'siswa.nama', 'name'=>'siswa.nama', 'title'=>'Nama'])
+            ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'kelas.nama_kelas', 'title'=>'Kelas'])
             ->addColumn(['data' => 'tanggal', 'name'=>'tanggal', 'title'=>'Tanggal'])
-            ->addColumn(['data' => 'jam_masuk', 'name'=>'jam_masuk', 'title'=>'Jam Masuk']);
-            // ->addColumn(['data' => 'jam_keluar', 'name'=>'jam_keluar', 'title'=>'Jam Keluar']);            
+            ->addColumn(['data' => 'jam_masuk', 'name'=>'jam_masuk', 'title'=>'Jam Masuk'])
+            ->addColumn(['data' => 'jam_pulang', 'name'=>'jam_pulang', 'title'=>'Jam Keluar']);            
             
             return view('Absen.index')->with(compact('html'));
     }
     public function input(Request $request, Builder $htmlBuilder)
     {
-        $pegawai = Pegawai::all();
+        $pegawai = Siswa::all();
         $absen = Absen::all();
         // return view('Pegawai.create', compact('pegawai','jabatan'));
         if ($request->ajax()) {
-        $pegawai = Pegawai::with(['absen']);               
+        $pegawai = Siswa::with(['absen']);               
         return Datatables::of($pegawai)
         ->addColumn('action', function($pegawai){
             return view('materials._absen', [
@@ -56,71 +60,104 @@ class AbsenController extends Controller
         ->make(true);
     }    
     $html = $htmlBuilder
-    ->addColumn(['data' => 'nip', 'name'=>'nip', 'title'=>'NIP'])
+    ->addColumn(['data' => 'nis', 'name'=>'nis', 'title'=>'NIP'])
     ->addColumn(['data' => 'nama', 'name'=>'nama', 'title'=>'Nama']);
     // ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
     return view('Absen.input')->with(compact('html','pegawai'));
     }
-    
-    // public function jam(Request $request)
-    // {        
-    //     $pegawai_id = Absen::with('Pegawai')->get();
-    //     $tanggal = date("Y-m-d"); // 2017-02-01
-    //     $jam = date("H:i:s"); // 12:31:20
-
-    //     $absen = new Absen;
-    //     // absen masuk
-
-    //     if (isset($request->masuk)){
-    //          //cek double data
-    //         $cek_double = $absen->where(['tanggal'=> $tanggal, 'pegawai_id' => $pegawai_id])->count();
+    public function kelas(Request $request, Builder $htmlBuilder){
+        if($request->ajax()){
+            $kelas = Kelas::all();
+            return Datatables::of($kelas)->addColumn('action', function($kelas){
+                return view('materials._view', [
+                    'view_url'=> route('kelas', $kelas->id),
+                ]);
+            })->make(true);
+        }
+        $html = $htmlBuilder
+        ->addColumn(['data'=>'nama_kelas', 'name'=>'nama_kelas', 'title'=>'Nama Kelas'])
+        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Action', 'orderable'=>false, 'searchable'=>false]);
+        return view('Absen.kelas')->with(compact('html'));
+    }
+    public function absen(Request $request, $id, Builder $htmlBuilder){
+        $pegawai = Siswa::where('kelas_id', $id)->get();
+        $cok = Kelas::where('id', $id)->first();
+        if($request->ajax()){
+            $absen = Absen::where('kelas_id', $id)->with('siswa')->get();
+            return Datatables::of($absen)->make(true);
+        }
+        $html = $htmlBuilder
+            ->addColumn(['data' => 'siswa.nis', 'name'=>'siswa.nis', 'title'=>'NIP'])
+            ->addColumn(['data' => 'siswa.nama', 'name'=>'siswa.nama', 'title'=>'Nama'])
+            ->addColumn(['data' => 'tanggal', 'name'=>'tanggal', 'title'=>'Tanggal'])
+            ->addColumn(['data' => 'jam_masuk', 'name'=>'jam_masuk', 'title'=>'Jam Masuk'])
+            ->addColumn(['data' => 'jam_pulang', 'name'=>'jam_pulang', 'title'=>'Jam Keluar'])
+            ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'keterangan']);            
             
-    //         if ($cek_double >0 ){
-    //             return redirect()->back();
-    //         }
-
-    //         $absen->create([
-    //             'pegawai_id'   => $pegawai_id,
-    //             'tanggal'      => $tanggal,
-    //             'jam_masuk'   => $jam]);
-
-    //         return redirect()->back();
-
-    //     } //absen keluar 
-    //     elseif (isset($request->keluar)){
-    //         $absen->where(['tanggal' => $tanggal, 'pegawai_id' => $pegawai_id])
-    //             ->update([
-    //                 'jam_keluar' => $jam]);
-    //         return redirect()->back();       
-    //     }
-       
-    //     // dd ($absen);
-    //     return $request->all();
-    // }
-
-    public function masuk(Request $request){
+            return view('Absen.input')->with(compact('html', 'pegawai', 'cok'));
+        
 
     }
-    public function keluar(Request $request){
-
-    }
+    
     public function store(Request $request)
     {
         //
         $this->validate($request, 
         ['tanggal' => 'required',
-        'jam_masuk' => 'required',
-        'pegawai_id' => 'required']);
-        $absen = Absen::create($request->all());
-        return redirect()->route('absen.index');
+        'keterangan' => 'required',
+        'siswa_id' => 'required']);
+        $kelas = Siswa::where('id', $request->siswa_id)->first();
+        $absen = new Absen();
+        $absen->tanggal = $request->tanggal;
+        $absen->siswa_id = $request->siswa_id;
+        $absen->kelas_id = $kelas->kelas_id;
+        $absen->keterangan = $request->keterangan;
+        $absen->save();
+
+        return back();
     }
-    // public function update(Request $request,$id)
-    // {
-    //     $this->validate($request, 
-    //     ['jam_keluar' => 'required',
-    //     'pegawai_id' => 'required']);
-    //     $absen = Absen::find($id);
-    //     $absen->update($request->all());
-    //     return redirect()->route('absen.index');
-    // }
+    public function excel($id){
+        $time = Carbon::now()->toDateString();
+        $matchThese = ['kelas_id' => $id, 'tanggal' => $time,];
+        $absen = Absen::where($matchThese)->with('siswa', 'kelas')->get();
+        $absen_array[] = array('Nama', 'Kelas', 'Tanggal', 'Jam Masuk', 'Jam Keluar', 'Keterangan');
+        foreach($absen as $data){
+            $absen_array[] = array(
+                'Nama' => $data->siswa->nama,
+                'kelas' => $data->kelas->nama_kelas,
+                'Tanggal' => $data->tanggal,
+                'Jam Masuk' => $data->jam_masuk,
+                'Jam Keluar' => $data->jam_pulang,
+                'Keterangan' => $data->keterangan
+            );
+        }
+        
+        Excel::create('RekapAbsensi', function($excel) use ($absen_array){
+            $excel->setTitle('Rekap Absensi');
+            $excel->sheet('RekapAbsensi', function($sheet) use ($absen_array){
+                $sheet->fromArray($absen_array, null, 'A1', false, false);
+            });
+        })->download('xlsx');
+    }
+    public function excelAll($id){
+        $absen = Absen::where('kelas_id', $id)->with('siswa', 'kelas')->get();
+        $absen_array[] = array('Nama', 'Kelas', 'Tanggal', 'Jam Masuk', 'Jam Keluar', 'Keterangan');
+        foreach($absen as $data){
+            $absen_array[] = array(
+                'Nama' => $data->siswa->nama,
+                'kelas' => $data->kelas->nama_kelas,
+                'Tanggal' => $data->tanggal,
+                'Jam Masuk' => $data->jam_masuk,
+                'Jam Keluar' => $data->jam_pulang,
+                'Keterangan' => $data->keterangan
+            );
+        }
+        
+        Excel::create('RekapAbsensi', function($excel) use ($absen_array){
+            $excel->setTitle('Rekap Absensi');
+            $excel->sheet('RekapAbsensi', function($sheet) use ($absen_array){
+                $sheet->fromArray($absen_array, null, 'A1', false, false);
+            });
+        })->download('xlsx');
+    }
 }

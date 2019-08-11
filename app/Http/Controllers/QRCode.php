@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class QRCode extends Controller
 {
     public function index(){
-        $dt = Carbon::now()->toDateString();
-
+        $time = Carbon::now()->toDateString();
+        $dt = base64_encode($time);
         return view('welcome', compact('dt'));
     }
 }
