@@ -5,8 +5,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Data Kehadiran Pegawai</h4>
-                        <p class="category">Data Kehadiran Pegawai UIN Sunan Gunung Djati</p>
+                        <h4 class="title">Data Kehadiran Siswa</h4>
                     </div>
                     <div class="panel-body">
                         {!! $html->table(['class'=>'table-striped']) !!}

@@ -28,9 +28,11 @@ class AbsenApiController extends Controller
     }
     public function absenPulang(Request $request){
         $dt = Carbon::now()->toTimeString();
-        $absen = Absen::find($request->id_absen);
+        $absen = Absen::findOrFail($request->id_absen);
         $absen->jam_pulang = $dt;
         $absen->save();
-        return $absen;
+        if($absen){
+            return $absen;
+        }else{}
     }
 }

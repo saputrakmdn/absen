@@ -119,6 +119,7 @@ class AbsenController extends Controller
     public function excel($id){
         $time = Carbon::now()->toDateString();
         $matchThese = ['kelas_id' => $id, 'tanggal' => $time,];
+        $kelas = Kelas::where('id', $id)->first();
         $absen = Absen::where($matchThese)->with('siswa', 'kelas')->get();
         $absen_array[] = array('Nama', 'Kelas', 'Tanggal', 'Jam Masuk', 'Jam Keluar', 'Keterangan');
         foreach($absen as $data){
@@ -131,15 +132,19 @@ class AbsenController extends Controller
                 'Keterangan' => $data->keterangan
             );
         }
-        
-        Excel::create('RekapAbsensi', function($excel) use ($absen_array){
+        $t = $kelas->nama_kelas.'-'.$time;
+        Excel::create('Rekap Absensi-'.$t, function($excel) use ($absen_array){
             $excel->setTitle('Rekap Absensi');
             $excel->sheet('RekapAbsensi', function($sheet) use ($absen_array){
+                $sheet->getDefaultStyle()->getAlignment()->setWrapText(true);
+                $sheet->getDefaultStyle()->getFont()->setName('Arial');
+                $sheet->getDefaultStyle()->getFont()->setSize(12);
                 $sheet->fromArray($absen_array, null, 'A1', false, false);
             });
         })->download('xlsx');
     }
     public function excelAll($id){
+        $kelas = Kelas::where('id', $id)->first();
         $absen = Absen::where('kelas_id', $id)->with('siswa', 'kelas')->get();
         $absen_array[] = array('Nama', 'Kelas', 'Tanggal', 'Jam Masuk', 'Jam Keluar', 'Keterangan');
         foreach($absen as $data){
@@ -152,11 +157,14 @@ class AbsenController extends Controller
                 'Keterangan' => $data->keterangan
             );
         }
-        
-        Excel::create('RekapAbsensi', function($excel) use ($absen_array){
+        $t = $kelas->nama_kelas;
+        Excel::create('Rekap Absensi-'.$t, function($excel) use ($absen_array){
             $excel->setTitle('Rekap Absensi');
             $excel->sheet('RekapAbsensi', function($sheet) use ($absen_array){
-                $sheet->fromArray($absen_array, null, 'A1', false, false);
+                $sheet->getDefaultStyle()->getAlignment()->setWrapText(true);
+                $sheet->getDefaultStyle()->getFont()->setName('Arial');
+                $sheet->getDefaultStyle()->getFont()->setSize(12);
+                $sheet->fromArray($absen_array, null, 'A2', false, false);
             });
         })->download('xlsx');
     }
