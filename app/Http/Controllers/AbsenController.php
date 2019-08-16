@@ -32,7 +32,7 @@ class AbsenController extends Controller
             return Datatables::of($absen)->make(true);
             }
             $html = $htmlBuilder
-            ->addColumn(['data' => 'siswa.nis', 'name'=>'siswa.nis', 'title'=>'NIP'])
+            ->addColumn(['data' => 'siswa.nis', 'name'=>'siswa.nis', 'title'=>'NIS'])
             ->addColumn(['data' => 'siswa.nama', 'name'=>'siswa.nama', 'title'=>'Nama'])
             ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'kelas.nama_kelas', 'title'=>'Kelas'])
             ->addColumn(['data' => 'tanggal', 'name'=>'tanggal', 'title'=>'Tanggal'])
@@ -60,7 +60,7 @@ class AbsenController extends Controller
         ->make(true);
     }    
     $html = $htmlBuilder
-    ->addColumn(['data' => 'nis', 'name'=>'nis', 'title'=>'NIP'])
+    ->addColumn(['data' => 'nis', 'name'=>'nis', 'title'=>'NIS'])
     ->addColumn(['data' => 'nama', 'name'=>'nama', 'title'=>'Nama']);
     // ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
     return view('Absen.input')->with(compact('html','pegawai'));
@@ -87,7 +87,7 @@ class AbsenController extends Controller
             return Datatables::of($absen)->make(true);
         }
         $html = $htmlBuilder
-            ->addColumn(['data' => 'siswa.nis', 'name'=>'siswa.nis', 'title'=>'NIP'])
+            ->addColumn(['data' => 'siswa.nis', 'name'=>'siswa.nis', 'title'=>'NIS'])
             ->addColumn(['data' => 'siswa.nama', 'name'=>'siswa.nama', 'title'=>'Nama'])
             ->addColumn(['data' => 'tanggal', 'name'=>'tanggal', 'title'=>'Tanggal'])
             ->addColumn(['data' => 'jam_masuk', 'name'=>'jam_masuk', 'title'=>'Jam Masuk'])
