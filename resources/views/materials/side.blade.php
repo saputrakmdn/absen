@@ -37,6 +37,24 @@
                     <p>Kelas</p>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('guru.index') }}">
+                    <i class="ti-crown"></i>
+                    <p>Guru</p>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('piket.index') }}">
+                    <i class="ti-crown"></i>
+                    <p>Piket</p>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('info.index') }}">
+                    <i class="ti-crown"></i>
+                    <p>Info</p>
+                </a>
+            </li>
             {{--
             <li>
                 <a href="#">

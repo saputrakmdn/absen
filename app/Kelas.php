@@ -15,4 +15,7 @@ class Kelas extends Model
     public function Absen(){
         return $this->hasMany('App\Absen', 'kelas_id');
     }
+    public function Piket() {
+        return $this->hasMany('App\Piket', 'kelas_id');
+    }
 }

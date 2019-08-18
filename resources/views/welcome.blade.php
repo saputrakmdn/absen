@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="refresh" content="200">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('asset/Admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
     <title>Absensi TKJ</title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
@@ -73,14 +73,43 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
+                
+                @switch($waktu)
+                @case('06')
                 <p class="text-center h2">Scan Here</p>
                 <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
+                @break
+                @case('07')
+                <p class="text-center h2">Scan Here</p>
+                <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
+                @break
+                @case('15')
+                <p class="text-center h2">Scan Here</p>
+                <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
+                @break
+                @case('16')
+                <p class="text-center h2">Scan Here</p>
+                <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
+                @break
+                @case('17')
+                <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
+                @break
+                @default
+                <p class="text-center h2">Informasi</p>
+                <div style="height: 400px;margin: 0px auto 0px auto; overflow: auto; border: 3px solid black;">
+                @forelse($info as $data)
+                <h3 class="text-center display-3"><b>{{$data->judul}}</b></h3>
+                <pre>{!!$data->isi!!}</pre>           
+                <p class="text-center"><img src="file/{{$data->file}}" class="img-responsive"  alt="" srcset=""></p>
+                @empty
+                <p class="text-center h1">Tidak Ada Informasi</p>
+                @endforelse
+                </div>
+                @endswitch
             </div>
             <div class="col-sm-6">
-                <img class="img-responsive center-block" src="{{ asset('asset/Admin/assets/img/TKJ.png') }}"
-                    width="100px" height="100px" style="margin-top:15px;" alt="">
                 <p class="text-center h2">Status Absen</p>
-                <div style="height: 400px;margin: 0px auto 0px auto; overflow: auto;">
+                <div style="height: 200px;margin: 0px auto 0px auto; overflow: auto;">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -102,6 +131,26 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-sm-6">
+                <pre><p class="text-center h4">Piket Jurusan</p></pre>
+                <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Kelas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($piket as $data)
+                        <tr>
+                        <td>{{$data->siswa->nama}}</td>
+                        <td>{{$data->kelas->nama_kelas}}</td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                </table>
+                </div>
+                <div class="col-sm-6"><pre><p class="text-center h4">Guru Tidak Hadir</p></pre></div>
             </div>
         </div>
     </div>

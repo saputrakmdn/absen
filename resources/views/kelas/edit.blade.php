@@ -18,7 +18,7 @@
                             <br>
                             <br>
                             <div class="form-group {{ $errors->has('nama_kelas') ? ' has-error' : '' }}">
-                                <label class="control-label">Nama Jabatan</label>
+                                <label class="control-label">Nama Kelas</label>
                                 <input type="text" name="nama_kelas" class="form-control" value="{{ $kelas->nama_kelas }}" required> @if ($errors->has('nama_kelas'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('nama_kelas') }}</strong>

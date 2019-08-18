@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css" rel="stylesheet">
 	<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('asset/Admin/assets/img/uin.png') }}">
 	<link rel="icon" type="image/png" sizes="96x96" href="{{ asset('asset/Admin/assets/img/uin.png') }}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -74,7 +75,8 @@
     <script src="{{ asset('asset/Admin/assets/js/demo.js') }}"></script>
 
     <script src="{{ asset('asset/Table/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('asset/Table/js/dataTables.bootstrap.min.js') }}"></script>   
+    <script src="{{ asset('asset/Table/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js"></script> 
     @yield('scripts')
     {{-- <script type="text/javascript">
         $(document).ready(function(){

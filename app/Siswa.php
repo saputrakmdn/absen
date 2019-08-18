@@ -15,4 +15,7 @@ class Siswa extends Model
     public function Absen() {
         return $this->hasMany('App\Absen', 'siswa_id');
     }
+    public function Piket() {
+        return $this->hasMany('App\Piket', 'siswa_id');
+    }
 }
