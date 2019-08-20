@@ -3,18 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Piket;
-use App\Siswa;
-use App\Kelas;
+use App\Guru;
+use App\AbsenGuru;
 use Yajra\DataTables\Html\Builder;
 use Yajra\Datatables\Datatables;
 
-class PiketController extends Controller
+class AbsenGuruController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,24 +17,21 @@ class PiketController extends Controller
      */
     public function index(Request $request, Builder $htmlBuilder)
     {
-        $siswa = Siswa::all();
-        $kelas = Kelas::all();
-        if ($request->ajax()) {
-            $pegawai = Piket::with(['siswa', 'kelas'])->get();
-            // return Datatables::of($pegawai)->make(true);
-            return Datatables::of($pegawai)
-            ->addColumn('action', function($pegawai){
-                return view('materials._piket', [
-                'model'=> $pegawai->id,
-                'delete_url'=> route('piket.destroy', $pegawai->id)
+        $guru = Guru::all();
+        if($request->ajax()){
+            $kelas = AbsenGuru::with('guru');
+            return Datatables::of($kelas)->addColumn('action', function($kelas){
+                return view('materials._view', [
+                    'view_url'=> route('kelas', $kelas->id),
                 ]);
             })->make(true);
         }
         $html = $htmlBuilder
-        ->addColumn(['data' => 'siswa.nama', 'name'=>'siswa.nama', 'title'=>'Nama Siswa'])
-        ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'kelas.nama_kelas', 'title'=>'Kelas'])
-        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
-        return view('piket.index')->with(compact('html', 'siswa', 'kelas'));
+        ->addColumn(['data'=>'tanggal', 'name'=>'tanggal', 'title'=>'Tanggal'])
+        ->addColumn(['data'=>'guru.nama', 'name'=>'nama', 'title'=>'Nama Guru'])
+        ->addColumn(['data'=>'alasan', 'name'=>'alasan', 'title'=>'Alasan'])
+        ->addColumn(['data'=>'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan']);
+        return view('absenguru.input')->with(compact('html', 'guru'));
     }
 
     /**
@@ -60,8 +52,9 @@ class PiketController extends Controller
      */
     public function store(Request $request)
     {
-        $pegawai = Piket::create($request->all());
-        return redirect()->route('piket.index');
+        
+        $jabatan = AbsenGuru::create($request->all());
+        return redirect()->route('absenguru.index');
     }
 
     /**
@@ -106,7 +99,6 @@ class PiketController extends Controller
      */
     public function destroy($id)
     {
-        Piket::destroy($id);
-        return redirect()->route('piket.index');
+        //
     }
 }

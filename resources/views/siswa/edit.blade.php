@@ -31,6 +31,17 @@
                                 <strong>{{ $errors->first('nama') }}</strong>
                             </span> @endif
                             </div>
+                            <div class="form-group {{ $errors->has('jabatan_id') ? 'has error' : '' }}">
+                                <label class="control-label">Jenis Kelamin</label>
+                                <select name="jeniskelamin" class="form-control">
+                                    <option>{{$pegawai->jeniskelamin}}</option>
+                                    <option value="L">Laki-Laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                                @if ($errors->has('jabatan'))
+                                <span class="help-block">
+			  				<strong>{{ $errors->first('jabatan') }}</strong>
+			  			</span> @endif
                             <div class="form-group {{ $errors->has('kelas_id') ? ' has-error' : '' }}">
                                 <label class="control-label">Jabatan</label>
                                 <select name="kelas_id" class="form-control">

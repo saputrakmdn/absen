@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Piket extends Model
 {
     protected $table = 'piket';
-    protected $fillable = ['siswa_id', 'kelas_id'];
+    protected $fillable = ['id','siswa_id', 'kelas_id'];
     public $timestamps = false;
     public function Siswa() {
         return $this->belongsTo('App\Siswa', 'siswa_id');

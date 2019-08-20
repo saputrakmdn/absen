@@ -35,6 +35,7 @@ class SiswaController extends Controller
         $html = $htmlBuilder
         ->addColumn(['data' => 'nis', 'name'=>'nis', 'title'=>'NIS'])
         ->addColumn(['data' => 'nama', 'name'=>'nama', 'title'=>'Nama'])
+        ->addColumn(['data'=> 'jeniskelamin', 'name'=>'jeniskelamin', 'title'=>'Jenis Kelamin'])
         ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'jabatan.kelas.nama_kelas', 'title'=>'Kelas'])
         ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
         return view('siswa.index')->with(compact('html'));
@@ -104,7 +105,6 @@ class SiswaController extends Controller
     {
         $this->validate($request, 
         [
-            'nis' => 'required|numeric|unique:siswa',
             'nama' => 'required',
             'kelas_id' => 'required'
         ]);

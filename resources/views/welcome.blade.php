@@ -72,7 +72,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 
                 @switch($waktu)
                 @case('06')
@@ -107,7 +107,7 @@
                 </div>
                 @endswitch
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <p class="text-center h2">Status Absen</p>
                 <div style="height: 200px;margin: 0px auto 0px auto; overflow: auto;">
                     <table class="table table-striped">
@@ -150,7 +150,26 @@
                         </tbody>
                 </table>
                 </div>
-                <div class="col-sm-6"><pre><p class="text-center h4">Guru Tidak Hadir</p></pre></div>
+                <div class="col-sm-6"><pre><p class="text-center h4">Guru Tidak Hadir</p></pre>
+                <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nama Guru</th>
+                                <th>Alasan</th>
+                                <th>Keteranagan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($absenguru as $data)
+                        <tr>
+                        <td>{{$data->guru->nama}}</td>
+                        <td>{{$data->alasan}}</td>
+                        <td>{{$data->keterangan}}</td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                </table>
+                </div>
             </div>
         </div>
     </div>

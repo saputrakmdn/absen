@@ -10,13 +10,10 @@
                 <br>
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Data Kehadiran</h4>
-                        <p class="category">Data Kehadiran Kelas {{$cok->nama_kelas}}</p>
+                        <h4 class="title">Data Kehadiran Guru</h4>
                     </div>
                     <div class="panel pull-right">
                     <a class="btn btn-info" data-toggle="modal" data-target="#masuk" ><span class="ti-alarm-clock"></span>&nbsp;Tambah Keterangan</a>&nbsp;
-                    <a class="btn btn-info" href="{{route('excel', $cok->id)}}"> <span class="fa fa-file-excel-o"></span>Rekap Perhari</a>
-                    <a class="btn btn-info" href="{{route('excel.all', $cok->id)}}"><span class="fa fa-file-excel-o"></span>Rekap Keseluruhan</a>&nbsp;
                     </div>
                     <div class="panel-body">
                         
@@ -38,13 +35,13 @@
                 <h4 class="modal-title">Tambah Absen</h4>
             </div>
             <div class="modal-body">
-                <form action="{{ route('absen.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('absenguru.store') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
-                        <label class="control-label">Siswa</label>
-                        <select name="siswa_id" class="form-control">
+                        <label class="control-label">Nama Guru</label>
+                        <select name="guru_id" class="form-control">
                             <option>-</option>
-                            @foreach($pegawai as $data)
+                            @foreach($guru as $data)
                             <option value="{{ $data->id }}">{{ $data->nama }}</option>
                             @endforeach
                         </select>
@@ -61,12 +58,25 @@
                 </span> @endif
             </div>
             <div class="form-group {{ $errors->has('keterangan') ? 'has error' : '' }}">
-                        <label class="control-label">Keterangan</label>
-                        <select name="keterangan" class="form-control">
+                        <label class="control-label">Alasan</label>
+                        <select name="alasan" class="form-control">
                             <option>-</option>
                             <option value="alfa">Alfa</option>
                             <option value="izin">Izin</option>
                             <option value="sakit">Sakit</option>
+                            <option value="rapat">Rapat</option>
+                        </select>
+                        @if ($errors->has('keterangan'))
+                        <span class="help-block">
+                      <strong>{{ $errors->first('keterangan') }}</strong>
+                  </span> @endif
+                    </div>
+                    <div class="form-group {{ $errors->has('keterangan') ? 'has error' : '' }}">
+                        <label class="control-label">Keterangan</label>
+                        <select name="keterangan" class="form-control">
+                            <option>-</option>
+                            <option value="Ada Tugas">Ada Tugas</option>
+                            <option value="Tidak Ada Tugas">Tidak Ada Tugas</option>
                         </select>
                         @if ($errors->has('keterangan'))
                         <span class="help-block">
@@ -156,6 +166,6 @@
     }
 </script>
 
-@section('scripts') 
+<!-- @section('scripts') 
 {!! $html->scripts() !!} 
-@endsection
+@endsection -->

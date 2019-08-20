@@ -33,47 +33,40 @@
             </li>
             <li>
                 <a href="{{ route('kelas.index') }}">
-                    <i class="ti-crown"></i>
+                    <i class="fa fa-users"></i>
                     <p>Kelas</p>
                 </a>
             </li>
             <li>
                 <a href="{{ route('guru.index') }}">
-                    <i class="ti-crown"></i>
+                    <i class="ti-user"></i>
                     <p>Guru</p>
                 </a>
             </li>
             <li>
                 <a href="{{ route('piket.index') }}">
-                    <i class="ti-crown"></i>
+                    <i class="fa fa-calendar"></i>
                     <p>Piket</p>
                 </a>
             </li>
             <li>
                 <a href="{{ route('info.index') }}">
-                    <i class="ti-crown"></i>
+                    <i class="ti-info"></i>
                     <p>Info</p>
                 </a>
             </li>
-            {{--
             <li>
-                <a href="#">
-                    <i class="ti-pencil-alt2"></i>
-                    <p>Icons</p>
+                <a href="{{ route('absenguru.index') }}">
+                    <i class="fa fa-calendar-check-o"></i>
+                    <p>Absen Guru</p>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="ti-map"></i>
-                    <p>Maps</p>
+                <a href="{{ route('absenguru.index') }}">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <p>Tugas</p>
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    <i class="ti-bell"></i>
-                    <p>Notifications</p>
-                </a>
-            </li> --}}
         </ul>
     </div>
 </div>

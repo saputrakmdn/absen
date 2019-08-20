@@ -10,7 +10,7 @@ class AbsenApiController extends Controller
 {
     public function login(Request $request){
         $cari = $request->get('nis');
-        $data = Siswa::where('nis', 'like', '%' .  $cari . '%')->first();
+        $data = Siswa::where('nis', 'like', '%' .  $cari . '%')->with('kelas')->first();
         if($data){
             return $data;
         }else{}
