@@ -10,7 +10,7 @@
                 <br>
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Informasi</h4>
+                        <h4 class="title">Tugas</h4>
                     </div>
                     <div class="panel pull-right">
                     <a class="btn btn-info" data-toggle="modal" data-target="#masuk" ><span class="ti-plus"></span>&nbsp;Tambah</a>&nbsp;
@@ -31,22 +31,42 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Tambah Info</h4>
+                <h4 class="modal-title">Tambah Tugas</h4>
             </div>
             <div class="modal-body">
-                <form action="{{ route('info.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('tugas.store') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
-                        <label class="control-label">Judul</label>
-                        <input type="text" name="judul" class="form-control" required>
+                        <label class="control-label">Guru</label>
+                        <select name="nama_guru" class="form-control">
+                            <option>-</option>
+                            @foreach($guru as $data)
+                            <option value="{{$data->nama}}">{{$data->nama}}</option>
+                            @endforeach
+                            
+                        </select>
                         @if ($errors->has('siswa_id'))
                         <span class="help-block">
                       <strong>{{ $errors->first('siswa_id') }}</strong>
                   </span> @endif
                     </div>
                     <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
-                        <label class="control-label">Isi Informasi</label>
-                        <textarea name="isi" id="isi" rows="7" class="form-control ckeditor"></textarea>
+                        <label class="control-label">Kelas</label>
+                        <select name="kelas_id" class="form-control">
+                            <option>-</option>
+                            @foreach($kelas as $data)
+                            <option value="{{$data->id}}">{{$data->nama_kelas}}</option>
+                            @endforeach
+                            
+                        </select>
+                        @if ($errors->has('siswa_id'))
+                        <span class="help-block">
+                      <strong>{{ $errors->first('siswa_id') }}</strong>
+                  </span> @endif
+                    </div>
+                    <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
+                        <label class="control-label">Tugas</label>
+                        <textarea name="tugas" id="tugas" rows="7" class="form-control ckeditor"></textarea>
                         @if ($errors->has('siswa_id'))
                         <span class="help-block">
                       <strong>{{ $errors->first('siswa_id') }}</strong>
@@ -63,7 +83,6 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary panel pull-right"><span class="ti-check"></span>&nbsp;Selesai</button>
-                {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> --}}
             </div>
         </div>
     </form>

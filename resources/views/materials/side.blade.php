@@ -32,6 +32,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('jurusan.index') }}">
+                    <i class="fa fa-users"></i>
+                    <p>Jurusan</p>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('kelas.index') }}">
                     <i class="fa fa-users"></i>
                     <p>Kelas</p>
@@ -62,7 +68,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('absenguru.index') }}">
+                <a href="{{ route('tugas.index') }}">
                     <i class="fa fa-pencil-square-o"></i>
                     <p>Tugas</p>
                 </a>

@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     protected $table = 'siswa';
-    protected $fillable = ['id','nis','nama', 'jeniskelamin','kelas_id'];
+    protected $fillable = ['id', 'foto', 'jurusan_id','nis','nama','tempat', 'tanggallahir', 'nohp', 'jeniskelamin','kelas_id'];
     public $timestamps = false;
     public function Kelas() {
         return $this->belongsTo('App\Kelas', 'kelas_id');
+    }
+    public function Jurusan() {
+        return $this->belongsTo('App\Jurusan', 'jurusan_id');
     }
     public function Absen() {
         return $this->hasMany('App\Absen', 'siswa_id');

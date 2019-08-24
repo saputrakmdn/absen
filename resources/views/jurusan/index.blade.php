@@ -10,7 +10,7 @@
                 <br>
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Informasi</h4>
+                        <h4 class="title">Jurusan</h4>
                     </div>
                     <div class="panel pull-right">
                     <a class="btn btn-info" data-toggle="modal" data-target="#masuk" ><span class="ti-plus"></span>&nbsp;Tambah</a>&nbsp;
@@ -31,35 +31,27 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Tambah Info</h4>
+                <h4 class="modal-title">Tambah Jurusan</h4>
             </div>
             <div class="modal-body">
-                <form action="{{ route('info.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('jurusan.store') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
-                        <label class="control-label">Judul</label>
-                        <input type="text" name="judul" class="form-control" required>
+                        <label class="control-label">Nama Jurusan</label>
+                        <input type="text" name="nama" class="form-control" required>
                         @if ($errors->has('siswa_id'))
                         <span class="help-block">
                       <strong>{{ $errors->first('siswa_id') }}</strong>
                   </span> @endif
                     </div>
                     <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
-                        <label class="control-label">Isi Informasi</label>
-                        <textarea name="isi" id="isi" rows="7" class="form-control ckeditor"></textarea>
+                        <label class="control-label">Kode Jurusan</label>
+                        <input type="text" name="kode_jurusan" class="form-control" required>
                         @if ($errors->has('siswa_id'))
                         <span class="help-block">
                       <strong>{{ $errors->first('siswa_id') }}</strong>
                   </span> @endif
-                    </div>
-                    <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
-                        <label class="control-label">File</label>
-                        <input type="file" name="file" id="file">
-                        @if ($errors->has('siswa_id'))
-                        <span class="help-block">
-                      <strong>{{ $errors->first('siswa_id') }}</strong>
-                  </span> @endif
-                    </div>    
+                    </div>   
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary panel pull-right"><span class="ti-check"></span>&nbsp;Selesai</button>

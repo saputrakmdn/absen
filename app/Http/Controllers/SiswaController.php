@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Siswa;
 use App\Kelas;
+use App\Jurusan;
 use Yajra\DataTables\Html\Builder;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class SiswaController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $pegawai = Siswa::with(['kelas']);
+            $pegawai = Siswa::with(['kelas', 'jurusan']);
             // return Datatables::of($pegawai)->make(true);
             return Datatables::of($pegawai)
             ->addColumn('action', function($pegawai){
@@ -30,13 +31,20 @@ class SiswaController extends Controller
                 'delete_url'=> route('siswa.destroy', $pegawai->id),
                 'edit_url' => route('siswa.edit', $pegawai->id),
                 ]);
-            })->make(true);
+            })->addColumn('picture', function ($jabatan) {
+                return '<img src="fotosiswa/'.$jabatan->foto.'" alt="tidak ada file" style="width:100px;height:100px;"/>';
+            })->rawColumns(['action', 'picture'])->make(true);
         }
         $html = $htmlBuilder
         ->addColumn(['data' => 'nis', 'name'=>'nis', 'title'=>'NIS'])
         ->addColumn(['data' => 'nama', 'name'=>'nama', 'title'=>'Nama'])
+        ->addColumn(['data' => 'tempat', 'name'=>'nama', 'title'=>'Tempat Lahir'])
+        ->addColumn(['data' => 'tanggallahir', 'name'=>'nama', 'title'=>'Tanggal Lahir'])
         ->addColumn(['data'=> 'jeniskelamin', 'name'=>'jeniskelamin', 'title'=>'Jenis Kelamin'])
+        ->addColumn(['data' => 'nohp', 'name'=>'nama', 'title'=>'No. Handphone'])
         ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'jabatan.kelas.nama_kelas', 'title'=>'Kelas'])
+        ->addColumn(['data' => 'jurusan.nama', 'name'=>'jabatan.jurusan.nama', 'title'=>'Jurusan'])
+        ->addColumn(['data' => 'picture', 'name'=>'picture', 'title'=>'Foto'])
         ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
         return view('siswa.index')->with(compact('html'));
     }
@@ -50,7 +58,8 @@ class SiswaController extends Controller
     {
         $pegawai = Siswa::all();
         $jabatan = Kelas::all();
-        return view('siswa.create', compact('pegawai','jabatan'));
+        $jurusan = Jurusan::all();
+        return view('siswa.create', compact('pegawai','jabatan', 'jurusan'));
     }
 
     /**
@@ -65,7 +74,19 @@ class SiswaController extends Controller
         ['nis' => 'required|numeric|unique:siswa',
         'nama' => 'required',
         'kelas_id' => 'required']);
-        $pegawai = Siswa::create($request->all());
+        $filename = $request->file('foto')->getClientOriginalName();
+        $request->foto->move(base_path('public/fotosiswa'), $filename);
+        $jabatan = new Siswa();
+        $jabatan->nis = $request->nis;
+        $jabatan->nama = $request->nama;
+        $jabatan->tempat = $request->tempat;
+        $jabatan->tanggallahir = $request->tanggallahir;
+        $jabatan->nohp = $request->nohp;
+        $jabatan->jeniskelamin = $request->jeniskelamin;
+        $jabatan->foto = $filename;
+        $jabatan->jurusan_id = $request->jurusan_id;
+        $jabatan->kelas_id = $request->kelas_id;
+        $jabatan->save();
         return redirect()->route('siswa.index');
     }
 
@@ -90,8 +111,10 @@ class SiswaController extends Controller
     {
         $pegawai = Siswa::findOrFail($id);
         $jabatan = Kelas::all();
+        $jurusan = Jurusan::all();
+        $jurusanselect = Siswa::findOrFail($pegawai->id)->jurusan_id;
         $jabatanselect = Siswa::findOrFail($pegawai->id)->kelas_id;
-        return view('siswa.edit',compact('pegawai','jabatan','jabatanselect'));
+        return view('siswa.edit',compact('pegawai','jabatan','jabatanselect', 'jurusan', 'jurusanselect'));
     }
 
     /**
@@ -103,13 +126,37 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, 
-        [
-            'nama' => 'required',
-            'kelas_id' => 'required'
-        ]);
-        $pegawai = Siswa::find($id);
-        $pegawai->update($request->all());
+        
+        if($request->hasFile('foto')){
+            $jabatan = Siswa::find($id);
+            $filename = $jabatan->foto;
+        $request->foto->move(base_path('public/fotosiswa'), $filename);
+        $jabatan = Siswa::find($id);
+        $jabatan->nis = $request->nis;
+        $jabatan->nama = $request->nama;
+        $jabatan->tempat = $request->tempat;
+        $jabatan->tanggallahir = $request->tanggallahir;
+        $jabatan->nohp = $request->nohp;
+        $jabatan->jeniskelamin = $request->jeniskelamin;
+        $jabatan->foto = $filename;
+        $jabatan->jurusan_id = $request->jurusan_id;
+        $jabatan->kelas_id = $request->kelas_id;
+        $jabatan->save();
+        return redirect()->route('siswa.index');
+        }else{
+        $jabatan = Siswa::find($id);
+        $jabatan->nis = $request->nis;
+        $jabatan->nama = $request->nama;
+        $jabatan->tempat = $request->tempat;
+        $jabatan->tanggallahir = $request->tanggallahir;
+        $jabatan->nohp = $request->nohp;
+        $jabatan->jeniskelamin = $request->jeniskelamin;
+        $jabatan->jurusan_id = $request->jurusan_id;
+        $jabatan->kelas_id = $request->kelas_id;
+        $jabatan->update();
+        return redirect()->route('siswa.index');
+        }
+        
         return redirect()->route('siswa.index');
     }
 

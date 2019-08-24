@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Guru;
-use App\AbsenGuru;
 use Yajra\DataTables\Html\Builder;
 use Yajra\Datatables\Datatables;
+use App\Jurusan;
 
-class AbsenGuruController extends Controller
+class JurusanController extends Controller
 {
     public function __construct()
     {
@@ -21,21 +20,23 @@ class AbsenGuruController extends Controller
      */
     public function index(Request $request, Builder $htmlBuilder)
     {
-        $guru = Guru::all();
-        if($request->ajax()){
-            $kelas = AbsenGuru::with('guru');
-            return Datatables::of($kelas)->addColumn('action', function($kelas){
-                return view('materials._view', [
-                    'view_url'=> route('kelas', $kelas->id),
+        if ($request->ajax()) {
+            $jabatan = Jurusan::select(['id', 'nama', 'kode_jurusan']);
+            // return Datatables::of($jabatan)->make(true);
+            return Datatables::of($jabatan)
+            ->addColumn('action', function($jabatan){
+                return view('materials._action', [
+                'model'=> $jabatan,
+                'delete_url'=> route('jurusan.destroy', $jabatan->id),
+                'edit_url' => route('jurusan.edit', $jabatan->id),
                 ]);
             })->make(true);
         }
         $html = $htmlBuilder
-        ->addColumn(['data'=>'tanggal', 'name'=>'tanggal', 'title'=>'Tanggal'])
-        ->addColumn(['data'=>'guru.nama', 'name'=>'nama', 'title'=>'Nama Guru'])
-        ->addColumn(['data'=>'alasan', 'name'=>'alasan', 'title'=>'Alasan'])
-        ->addColumn(['data'=>'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan']);
-        return view('absenguru.input')->with(compact('html', 'guru'));
+        ->addColumn(['data' => 'nama', 'name'=>'nama', 'title'=>'Nama Jurusan'])
+        ->addColumn(['data' => 'kode_jurusan', 'name'=>'kode_jurusan', 'title'=>'Kode Jurusan'])
+        ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
+        return view('jurusan.index')->with(compact('html'));
     }
 
     /**
@@ -57,8 +58,11 @@ class AbsenGuruController extends Controller
     public function store(Request $request)
     {
         
-        $jabatan = AbsenGuru::create($request->all());
-        return redirect()->route('absenguru.index');
+        $this->validate($request, ['nama'=>'required',
+            'kode_jurusan' => 'required|unique:jurusan']);
+        $jabatan = Jurusan::create($request->all());
+        return redirect()->route('jurusan.index');
+        
     }
 
     /**
@@ -80,7 +84,8 @@ class AbsenGuruController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kelas = Jurusan::findOrFail($id);
+        return view('jurusan.edit',compact('kelas'));
     }
 
     /**
@@ -92,7 +97,9 @@ class AbsenGuruController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $jabatan = Jurusan::find($id);
+        $jabatan->update($request->all());
+        return redirect()->route('jurusan.index');
     }
 
     /**
@@ -103,6 +110,7 @@ class AbsenGuruController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Jurusan::destroy($id);
+        return redirect()->route('jurusan.index');
     }
 }

@@ -116,6 +116,7 @@
                                 <th>Nama</th>
                                 <th>Kelas</th>
                                 <th>Tanggal</th>
+                                <th>Keterangan</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -125,6 +126,7 @@
                                 <td>{{$item->siswa->nama}}</td>
                                 <td>{{$item->kelas->nama_kelas}}</td>
                                 <td>{{$item->tanggal}}</td>
+                                <td>{{$item->keterangan}}</td>
                                 <td><strong class="alert-success">Berhasil</strong></td>
                             </tr>
                             @endforeach
@@ -180,7 +182,7 @@
                 <script>
                     document.write(new Date().getFullYear())
 
-                </script>, made with <i class="fa fa-heart heart"></i> by Saputra Kamandanu.
+                </script>, Created by Saputra Kamandanu.
             </div>
         </div>
     </footer>
@@ -200,7 +202,7 @@
                         for (var i = 0; i < response.absen.length; i++) {
                             absen = absen + '<tr><td>' + response.absen[i].siswa['nama'] +
                                 '</td><td>' + response.absen[i].kelas['nama_kelas'] +
-                                '</td><td>' + response.absen[i]['tanggal'] +
+                                '</td><td>' + response.absen[i]['tanggal'] +'</td><td>'+response.absen[i]['keterangan']+
                                 '</td><td><strong class="alert-success">Berhasil</strong></td></tr>';
                         }
                         $('#absen').empty();

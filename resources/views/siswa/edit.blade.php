@@ -19,14 +19,35 @@
                             <br>
                             <div class="form-group {{ $errors->has('nis') ? ' has-error' : '' }}">
                                 <label class="control-label">NIS</label>
-                                <input type="text" name="nis" class="form-control" value="{{ $pegawai->nis }}" required> @if ($errors->has('nis'))
+                                <input type="number" name="nis" class="form-control" value="{{ $pegawai->nis }}" >@if ($errors->has('nis'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('nis') }}</strong>
                             </span> @endif
                             </div>
                             <div class="form-group {{ $errors->has('nama') ? ' has-error' : '' }}">
-                                <label class="control-label">Nama Pegawai</label>
-                                <input type="text" name="nama" class="form-control" value="{{ $pegawai->nama }}" required> @if ($errors->has('nama'))
+                                <label class="control-label">Nama</label>
+                                <input type="text" name="nama" class="form-control" value="{{ $pegawai->nama }}" > @if ($errors->has('nama'))
+                                <span class="help-block">
+                                <strong>{{ $errors->first('nama') }}</strong>
+                            </span> @endif
+                            </div>
+                            <div class="form-group {{ $errors->has('nama') ? ' has-error' : '' }}">
+                                <label class="control-label">Tempat Lahir</label>
+                                <input type="text" name="tempat" class="form-control" required> @if ($errors->has('nama'))
+                                <span class="help-block">
+                                <strong>{{ $errors->first('nama') }}</strong>
+                            </span> @endif
+                            </div>
+                            <div class="form-group {{ $errors->has('nama') ? ' has-error' : '' }}">
+                                <label class="control-label">Tanggal Lahir</label>
+                                <input type="date" name="tanggallahir" class="form-control" required> @if ($errors->has('nama'))
+                                <span class="help-block">
+                                <strong>{{ $errors->first('nama') }}</strong>
+                            </span> @endif
+                            </div>
+                            <div class="form-group {{ $errors->has('nama') ? ' has-error' : '' }}">
+                                <label class="control-label">No. Handphone</label>
+                                <input type="number" name="nohp" class="form-control" required> @if ($errors->has('nama'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('nama') }}</strong>
                             </span> @endif
@@ -42,11 +63,31 @@
                                 <span class="help-block">
 			  				<strong>{{ $errors->first('jabatan') }}</strong>
 			  			</span> @endif
+                          </div>
+                          <div class="form-group {{ $errors->has('foto') ? ' has-error' : '' }}">
+                                <label class="control-label">Foto</label>
+                                <input type="file" name="foto" class="form-control" > @if ($errors->has('nama'))
+                                <span class="help-block">
+                                <strong>{{ $errors->first('foto') }}</strong>
+                            </span> @endif
+                            </div>
                             <div class="form-group {{ $errors->has('kelas_id') ? ' has-error' : '' }}">
-                                <label class="control-label">Jabatan</label>
+                                <label class="control-label">Kelas</label>
                                 <select name="kelas_id" class="form-control">
                                     @foreach($jabatan as $data)
                                     <option value="{{ $data->id }}" {{ $jabatanselect==$data->id ? 'selected="selected"' : '' }}>{{ $data->nama_kelas }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('kelas_id'))
+                                <span class="help-block">
+                                <strong>{{ $errors->first('kelas_id') }}</strong>
+                            </span> @endif
+                            </div>
+                            <div class="form-group {{ $errors->has('kelas_id') ? ' has-error' : '' }}">
+                                <label class="control-label">Jurusan</label>
+                                <select name="jurusan_id" class="form-control">
+                                    @foreach($jurusan as $data)
+                                    <option value="{{ $data->id }}" {{ $jurusanselect==$data->id ? 'selected="selected"' : '' }}>{{ $data->nama }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('kelas_id'))

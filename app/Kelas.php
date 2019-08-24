@@ -18,4 +18,7 @@ class Kelas extends Model
     public function Piket() {
         return $this->hasMany('App\Piket', 'kelas_id');
     }
+    public function Tugas(){
+        return $this->hasMany('App\Tugas', 'kelas_id');
+    }
 }
