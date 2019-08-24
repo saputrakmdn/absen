@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Agu 2019 pada 09.25
+-- Waktu pembuatan: 24 Agu 2019 pada 19.32
 -- Versi server: 10.3.16-MariaDB
 -- Versi PHP: 7.3.7
 
@@ -21,6 +21,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `absensi`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `absenguru`
+--
+
+CREATE TABLE `absenguru` (
+  `id` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `guru_id` int(11) NOT NULL,
+  `alasan` varchar(50) NOT NULL,
+  `keterangan` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `absenguru`
+--
+
+INSERT INTO `absenguru` (`id`, `tanggal`, `guru_id`, `alasan`, `keterangan`) VALUES
+(1, '2019-08-19', 2, 'alfa', 'Ada Tugas'),
+(2, '2019-08-19', 3, 'izin', 'Tidak Ada Tugas');
 
 -- --------------------------------------------------------
 
@@ -45,42 +67,70 @@ CREATE TABLE `absens` (
 --
 
 INSERT INTO `absens` (`id`, `tanggal`, `jam_masuk`, `jam_pulang`, `keterangan`, `siswa_id`, `kelas_id`, `created_at`, `updated_at`) VALUES
-(1, '2019-08-15', '00:18:53', NULL, NULL, 1, 2, '2019-08-14 17:18:53', '2019-08-14 17:18:53'),
-(2, '2019-08-05', NULL, NULL, NULL, 2, 3, NULL, NULL),
-(3, '2019-08-15', '01:04:27', NULL, NULL, 1, 2, '2019-08-14 18:04:27', '2019-08-14 18:04:27'),
-(4, '2019-08-16', '11:59:49', '12:11:54', NULL, 1, 2, '2019-08-16 04:59:49', '2019-08-16 05:11:54'),
-(5, '2019-08-16', '12:55:47', NULL, NULL, 1, 2, '2019-08-16 05:55:47', '2019-08-16 05:55:47'),
-(6, '2019-08-16', '13:19:22', NULL, NULL, 1, 2, '2019-08-16 06:19:22', '2019-08-16 06:19:22');
+(8, '2019-08-23', NULL, NULL, 'alfa', 1, 2, '2019-08-23 10:34:55', '2019-08-23 10:34:55'),
+(9, '2019-08-23', NULL, NULL, 'izin', 1, 2, '2019-08-23 10:42:52', '2019-08-23 10:42:52'),
+(10, '2019-08-23', NULL, NULL, 'alfa', 1, 2, '2019-08-23 10:50:18', '2019-08-23 10:50:18'),
+(11, '2019-08-23', '06:12:29', NULL, 'hadir', 1, 2, '2019-08-22 23:12:29', '2019-08-22 23:12:29'),
+(12, '2019-08-24', '06:29:57', NULL, 'hadir', 5, 2, '2019-08-23 23:29:57', '2019-08-23 23:29:57');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jabatans`
+-- Struktur dari tabel `guru`
 --
 
-CREATE TABLE `jabatans` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `nama_jabatan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `guru` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `mapel` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jabatans`
+-- Dumping data untuk tabel `guru`
 --
 
-INSERT INTO `jabatans` (`id`, `nama_jabatan`, `created_at`, `updated_at`) VALUES
-(1, 'Kepala PTIPD', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(2, 'Layanan Informasi Akademik', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(3, 'Kepala Divisi Infrastruktur', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(4, 'Divisi Infrastruktur', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(5, 'Kepala Divisi Aplikasi', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(6, 'Divisi Aplikasi', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(7, 'Kepala Divisi PDDIKTI', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(8, 'Divisi PDDIKTI', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(9, 'Kepala Divisi Pelatihan', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(10, 'Divisi Pelatihan', '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(11, 'Monitoring', '2019-08-08 03:52:56', '2019-08-08 03:52:56');
+INSERT INTO `guru` (`id`, `nama`, `mapel`) VALUES
+(2, 'saputraaaaa', 'TKJHAHAH'),
+(3, 'Lidya Arlini, S.Kom', 'Inggris');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `info`
+--
+
+CREATE TABLE `info` (
+  `id` int(11) NOT NULL,
+  `judul` varchar(50) NOT NULL,
+  `isi` text NOT NULL,
+  `file` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `info`
+--
+
+INSERT INTO `info` (`id`, `judul`, `isi`, `file`) VALUES
+(12, 'Informasi', '<p style=\"text-align:center\"><span style=\"font-family:Comic Sans MS,cursive\"><span style=\"font-size:18px\">BESOK LIBUR!!!!</span></span></p>', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `jurusan`
+--
+
+CREATE TABLE `jurusan` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `kode_jurusan` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `jurusan`
+--
+
+INSERT INTO `jurusan` (`id`, `nama`, `kode_jurusan`) VALUES
+(2, 'Teknik Sepeda Motor', 'TSM');
 
 -- --------------------------------------------------------
 
@@ -139,64 +189,21 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pegawais`
+-- Struktur dari tabel `piket`
 --
 
-CREATE TABLE `pegawais` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `nip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jabatan_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `piket` (
+  `id` int(11) NOT NULL,
+  `siswa_id` int(11) NOT NULL,
+  `kelas_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pegawais`
+-- Dumping data untuk tabel `piket`
 --
 
-INSERT INTO `pegawais` (`id`, `nip`, `nama`, `jabatan_id`, `created_at`, `updated_at`) VALUES
-(1, '0201800001', 'Undang Syaripudin, M.Kom', 1, '2019-08-08 03:52:56', '2019-08-08 03:52:56'),
-(2, '0201800101', 'Diana Nurmalasari', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(3, '0201800102', 'Siti Nur Latifatul Qolbiyah', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(4, '0201800103', 'Rizki Faudzan Adzim', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(5, '0201800104', 'Wine Widiawaty', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(6, '0201800105', 'Wulan Ismaya', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(7, '0201800106', 'Sophia Putri Nurmalasari', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(8, '0201800107', 'Novi Amalia Ardha', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(9, '0201800108', 'Sri Nur Shinta', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(10, '0201800109', 'Tari Miftahul Jannah', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(11, '0201800110', 'Erik Nugraha', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(12, '0201800111', 'Rahmalia Ahmadi', 2, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(13, '0201800201', 'Gitarja Sandi, MT', 3, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(14, '0201800202', 'Yogi Wijaya, ST', 4, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(15, '0201800203', 'Bagus Enggartiasto', 4, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(16, '0201800204', 'M Iqbal Qomarudin', 4, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(17, '0201800205', 'Sulaiman Syah Jamal', 4, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(18, '0201800206', 'Abraham Dwi Kurniawan', 4, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(19, '0201800301', 'Jumadi ST M.Cs', 5, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(20, '0201800302', 'Rahmat Zaenal Abidin, MT', 6, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(21, '0201800303', 'Furiansyah Dipraja, ST', 6, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(22, '0201800304', 'Alfi Gusman', 6, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(23, '0201800305', 'Piscal Pratama Putra', 6, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(24, '0201800306', 'Temy Ramdhan', 6, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(25, '0201800307', 'Hadaina Lesta', 6, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(26, '0201800401', 'Ichsan Taufik, MT', 7, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(27, '0201800402', 'Fitri Puspitasari Budiana, S.Si', 8, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(28, '0201800403', 'Danil Kardia', 8, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(29, '0201800404', 'Agus Mahari', 8, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(30, '0201800405', 'Zahra Tsaradina', 8, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(31, '0201800406', 'Rinka Pranita', 8, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(32, '0201800407', 'Adi Nurachman', 8, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(33, '0201800501', 'Yogi Saputra Assyahab, ST', 9, '2019-08-08 03:52:57', '2019-08-08 03:52:57'),
-(34, '0201800502', 'Fatimah Ulwiyatul Badriyah', 10, '2019-08-08 03:52:58', '2019-08-08 03:52:58'),
-(35, '0201800503', 'Adi Putra Andriyandi', 10, '2019-08-08 03:52:58', '2019-08-08 03:52:58'),
-(36, '0201800504', 'Wendi Siswanto', 10, '2019-08-08 03:52:58', '2019-08-08 03:52:58'),
-(37, '0201800505', 'Finki Anjani', 10, '2019-08-08 03:52:58', '2019-08-08 03:52:58'),
-(38, '0201800601', 'Raka Fajar Salinggih', 11, '2019-08-08 03:52:58', '2019-08-08 03:52:58'),
-(39, '0201800602', 'Rexsy Rustiana Suparman', 11, '2019-08-08 03:52:58', '2019-08-08 03:52:58'),
-(40, '6969', 'saputra', 2, '2019-08-08 17:51:24', '2019-08-08 17:51:24'),
-(41, '15120001', 'saputra', 2, '2019-08-08 17:53:00', '2019-08-08 17:53:00');
+INSERT INTO `piket` (`id`, `siswa_id`, `kelas_id`) VALUES
+(3, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -208,6 +215,12 @@ CREATE TABLE `siswa` (
   `id` int(11) NOT NULL,
   `nis` bigint(20) NOT NULL,
   `nama` varchar(50) NOT NULL,
+  `jeniskelamin` varchar(20) NOT NULL,
+  `tempat` varchar(50) NOT NULL,
+  `tanggallahir` date NOT NULL,
+  `nohp` varchar(50) NOT NULL,
+  `foto` varchar(50) NOT NULL,
+  `jurusan_id` int(11) NOT NULL,
   `kelas_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -215,9 +228,32 @@ CREATE TABLE `siswa` (
 -- Dumping data untuk tabel `siswa`
 --
 
-INSERT INTO `siswa` (`id`, `nis`, `nama`, `kelas_id`) VALUES
-(1, 212, 'saputra', 2),
-(2, 231, 'test4', 3);
+INSERT INTO `siswa` (`id`, `nis`, `nama`, `jeniskelamin`, `tempat`, `tanggallahir`, `nohp`, `foto`, `jurusan_id`, `kelas_id`) VALUES
+(4, 545, 'aaaa', 'L', '', '0000-00-00', '', 'syahril.jpg', 2, 2),
+(5, 111, 'Chika', 'P', 'Tangerang', '2019-08-19', '12344', 'WhatsApp Image 2019-06-17 at 19.10.24.jpeg', 2, 2),
+(6, 212, 'saputra', 'L', 'Tangerang', '2019-08-14', '12344', 'tes.png', 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tugas`
+--
+
+CREATE TABLE `tugas` (
+  `id` int(11) NOT NULL,
+  `nama_guru` varchar(50) NOT NULL,
+  `kelas_id` int(11) NOT NULL,
+  `tugas` text NOT NULL,
+  `file` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tugas`
+--
+
+INSERT INTO `tugas` (`id`, `nama_guru`, `kelas_id`, `tugas`, `file`) VALUES
+(2, 'saputraaaaa', 2, '<p>aaaaaa</p>', 'h2WwNC5SIJIj2DHGR707L5ZKuPywnZEg.jpeg'),
+(4, 'Lidya Arlini, S.Kom', 2, '<p><strong>aaaaaa</strong></p>\r\n\r\n<ol>\r\n	<li><strong>a</strong></li>\r\n	<li><strong>b</strong></li>\r\n	<li><strong>c</strong></li>\r\n</ol>', '0');
 
 -- --------------------------------------------------------
 
@@ -248,15 +284,33 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 
 --
+-- Indeks untuk tabel `absenguru`
+--
+ALTER TABLE `absenguru`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `absens`
 --
 ALTER TABLE `absens`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `jabatans`
+-- Indeks untuk tabel `guru`
 --
-ALTER TABLE `jabatans`
+ALTER TABLE `guru`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `info`
+--
+ALTER TABLE `info`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `jurusan`
+--
+ALTER TABLE `jurusan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -278,16 +332,21 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indeks untuk tabel `pegawais`
+-- Indeks untuk tabel `piket`
 --
-ALTER TABLE `pegawais`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pegawais_jabatan_id_foreign` (`jabatan_id`);
+ALTER TABLE `piket`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tugas`
+--
+ALTER TABLE `tugas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -302,16 +361,34 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `absenguru`
+--
+ALTER TABLE `absenguru`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT untuk tabel `absens`
 --
 ALTER TABLE `absens`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `jabatans`
+-- AUTO_INCREMENT untuk tabel `guru`
 --
-ALTER TABLE `jabatans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+ALTER TABLE `guru`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `info`
+--
+ALTER TABLE `info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT untuk tabel `jurusan`
+--
+ALTER TABLE `jurusan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas`
@@ -326,32 +403,28 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `pegawais`
+-- AUTO_INCREMENT untuk tabel `piket`
 --
-ALTER TABLE `pegawais`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+ALTER TABLE `piket`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `tugas`
+--
+ALTER TABLE `tugas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `pegawais`
---
-ALTER TABLE `pegawais`
-  ADD CONSTRAINT `pegawais_jabatan_id_foreign` FOREIGN KEY (`jabatan_id`) REFERENCES `jabatans` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
