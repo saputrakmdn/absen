@@ -17,9 +17,10 @@
         html,
         body {
             background-color: #fff;
-            color: #636b6f;
+            color: #000;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
+            font-color: black;
             height: 100vh;
             margin: 0;
         }
@@ -71,7 +72,8 @@
 
 <body>
     <div class="container-fluid">
-        <div class="row">
+    <h1 class="text-center display-1" style="margin-top:50px;">Pusat Informasi TKJ SMKN 5 Kab. Tangerang</h1>
+        <div style="margin-top:20px;" class="row">
             <div class="col-sm-4">
                 
                 @switch($waktu)
@@ -92,10 +94,11 @@
                 <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
                 @break
                 @case('17')
+                <p class="text-center h2">Scan Here</p>
                 <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
                 @break
                 @default
-                <p class="text-center h2">Informasi</p>
+                <pre style="background: #0258c9;"><p class="text-center h3">Informasi</p></pre>
                 <div style="height: 400px;margin: 0px auto 0px auto; overflow: auto; border: 3px solid black;">
                 @forelse($info as $data)
                 <h3 class="text-center display-3"><b>{{$data->judul}}</b></h3>
@@ -106,11 +109,14 @@
                 @endforelse
                 </div>
                 @endswitch
+
+                
+                
             </div>
             <div class="col-sm-8">
-                <p class="text-center h2">Status Absen</p>
+                <pre style="background: #0258c9;"><p class="text-center h3">Status Absen</p></pre>
                 <div style="height: 200px;margin: 0px auto 0px auto; overflow: auto;">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>Nama</th>
@@ -134,9 +140,9 @@
                     </table>
                 </div>
                 <div class="col-sm-6">
-                <pre><p class="text-center h4">Piket Jurusan</p></pre>
+                <pre style="background: #0258c9;"><p class="text-center h4">Piket Jurusan</p></pre>
                 <table class="table table-striped table-bordered">
-                        <thead>
+                        <thead >
                             <tr>
                                 <th>Nama</th>
                                 <th>Kelas</th>
@@ -152,7 +158,7 @@
                         </tbody>
                 </table>
                 </div>
-                <div class="col-sm-6"><pre><p class="text-center h4">Guru Tidak Hadir</p></pre>
+                <div class="col-sm-6"><pre style="background: #0258c9;"><p class="text-center h4">Guru Tidak Hadir</p></pre>
                 <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -175,8 +181,15 @@
             </div>
         </div>
     </div>
-    <footer class="footer">
+    
+    <footer class="footer" style="margin-top:40px;">
         <div class="container-fluid">
+        <div class="pull-left">
+    Supported by:
+    <img src="{{asset('asset/logo/TKJ.png')}}" style="height:60px; width:50px; margin-right: 10px;"  alt="" srcset="">
+    <img src="{{asset('asset/logo/smkn5.png')}}"  alt="" style="height:50px; width:50px;"  srcset="">
+    <img src="{{asset('asset/logo/bestkj.png')}}" style="height:60px; width:60px; margin-left: 10px;"  alt="" srcset="">
+    </div>
             <div class="copyright pull-right">
                 &copy;
                 <script>
