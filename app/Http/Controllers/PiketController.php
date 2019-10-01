@@ -22,7 +22,7 @@ class PiketController extends Controller
      */
     public function index(Request $request, Builder $htmlBuilder)
     {
-        $siswa = Siswa::all();
+       
         $kelas = Kelas::all();
         if ($request->ajax()) {
             $pegawai = Piket::with(['siswa', 'kelas'])->get();
@@ -39,7 +39,11 @@ class PiketController extends Controller
         ->addColumn(['data' => 'siswa.nama', 'name'=>'siswa.nama', 'title'=>'Nama Siswa'])
         ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'kelas.nama_kelas', 'title'=>'Kelas'])
         ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
-        return view('piket.index')->with(compact('html', 'siswa', 'kelas'));
+        return view('piket.index')->with(compact('html', 'kelas'));
+    }
+    public function getSiswa($id){
+        $siswa = Siswa::where('kelas_id', $id)->pluck('nama', 'id');
+        return response()->json($siswa, 200);
     }
 
     /**

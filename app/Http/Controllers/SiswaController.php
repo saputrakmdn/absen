@@ -21,9 +21,11 @@ class SiswaController extends Controller
      */
     public function index(Request $request, Builder $htmlBuilder)
     {
+		
         if ($request->ajax()) {
             $pegawai = Siswa::with(['kelas', 'jurusan']);
             // return Datatables::of($pegawai)->make(true);
+
             return Datatables::of($pegawai)
             ->addColumn('action', function($pegawai){
                 return view('materials._action', [
@@ -32,7 +34,7 @@ class SiswaController extends Controller
                 'edit_url' => route('siswa.edit', $pegawai->id),
                 ]);
             })->addColumn('picture', function ($jabatan) {
-                return '<img src="fotosiswa/'.$jabatan->foto.'" alt="tidak ada file" style="width:100px;height:100px;"/>';
+                return '<img src="absen/public/fotosiswa/'.$jabatan->foto.'" alt="tidak ada file" style="width:100px;height:100px;"/>';
             })->rawColumns(['action', 'picture'])->make(true);
         }
         $html = $htmlBuilder
@@ -42,8 +44,8 @@ class SiswaController extends Controller
         ->addColumn(['data' => 'tanggallahir', 'name'=>'nama', 'title'=>'Tanggal Lahir'])
         ->addColumn(['data'=> 'jeniskelamin', 'name'=>'jeniskelamin', 'title'=>'Jenis Kelamin'])
         ->addColumn(['data' => 'nohp', 'name'=>'nama', 'title'=>'No. Handphone'])
-        ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'jabatan.kelas.nama_kelas', 'title'=>'Kelas'])
-        ->addColumn(['data' => 'jurusan.nama', 'name'=>'jabatan.jurusan.nama', 'title'=>'Jurusan'])
+        ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'kelas.nama_kelas', 'title'=>'Kelas'])
+        ->addColumn(['data' => 'jurusan.nama', 'name'=>'jurusan.nama', 'title'=>'Jurusan'])
         ->addColumn(['data' => 'picture', 'name'=>'picture', 'title'=>'Foto'])
         ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
         return view('siswa.index')->with(compact('html'));
@@ -157,7 +159,7 @@ class SiswaController extends Controller
         return redirect()->route('siswa.index');
         }
         
-        return redirect()->route('siswa.index');
+        
     }
 
     /**

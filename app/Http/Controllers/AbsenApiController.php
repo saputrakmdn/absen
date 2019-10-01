@@ -48,6 +48,9 @@ class AbsenApiController extends Controller
         $absen->siswa_id = $request->id;
         $absen->kelas_id = $request->kelas;
         $absen->save();
+        $siswa = Siswa::find($request->id);
+        $siswa->status = true;
+        $siswa->save();
         return $absen;
     }
     public function absenPulang(Request $request){

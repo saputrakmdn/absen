@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     protected $table = 'siswa';
-    protected $fillable = ['id', 'foto', 'jurusan_id','nis','nama','tempat', 'tanggallahir', 'nohp', 'jeniskelamin','kelas_id'];
+    protected $fillable = ['id', 'foto', 'status', 'jurusan_id','nis','nama','tempat', 'tanggallahir', 'nohp', 'jeniskelamin','kelas_id'];
     public $timestamps = false;
     public function Kelas() {
         return $this->belongsTo('App\Kelas', 'kelas_id');

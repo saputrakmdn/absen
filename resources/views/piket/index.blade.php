@@ -37,12 +37,13 @@
             <div class="modal-body">
                 <form action="{{ route('piket.store') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
-                <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
-                        <label class="control-label">Siswa</label>
-                        <select name="siswa_id" class="form-control">
+                
+                    <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
+                        <label class="control-label">Kelas</label>
+                        <select name="kelas_id" class="form-control">
                             <option>-</option>
-                            @foreach($siswa as $data)
-                            <option value="{{$data->id}}">{{$data->nama}}</option>
+                            @foreach($kelas as $data)
+                            <option value="{{$data->id}}">{{$data->nama_kelas}}</option>
                             @endforeach
                             
                         </select>
@@ -52,13 +53,9 @@
                   </span> @endif
                     </div>
                     <div class="form-group {{ $errors->has('siswa_id') ? 'has error' : '' }}">
-                        <label class="control-label">Kelas</label>
-                        <select name="kelas_id" class="form-control">
+                        <label class="control-label">Siswa</label>
+                        <select name="siswa_id" class="form-control">
                             <option>-</option>
-                            @foreach($kelas as $data)
-                            <option value="{{$data->id}}">{{$data->nama_kelas}}</option>
-                            @endforeach
-                            
                         </select>
                         @if ($errors->has('siswa_id'))
                         <span class="help-block">
@@ -112,6 +109,31 @@
 </div>
 @endsection
 
+@section('scripts') 
+{!! $html->scripts() !!} 
+<script>
+$(document).ready(function(){
+    $('select[name="kelas_id"]').on('change', function(){
+        var kelasId = $(this).val();
+        if(kelasId){
+            $.ajax({
+                url: '/getsiswa/'+kelasId,
+                type:"GET",
+                success: function(data){
+                    $('select[name="siswa_id"').empty();
+                    $.each(data, function(key, value){
+                        $('select[name="siswa_id"').append('<option value="'+key+'">'+value+'</option>');
+                    });
+                    
+                }
+            });
+        }else{
+            $('select[name="siswa_id")').empty();
+        }
+    });
+});
+</script>
+
 <script>
     //     $('#keluar').on('show.bs.modal', function (event) {
     //         var button = $(event.relatedTarget) 
@@ -127,9 +149,9 @@
     //   })
     function AbsenEdit(url)
     {
-        $.('.update').hide();
-        $.('#keluar').show();
-        $.('.keluar').attr('hidden',false);
+        $('.update').hide();
+        $('#keluar').show();
+        $('.keluar').attr('hidden',false);
         $.ajax({
         url:url,
         _token:token,
@@ -148,7 +170,4 @@
     });
     }
 </script>
-
-@section('scripts') 
-{!! $html->scripts() !!} 
 @endsection

@@ -28,17 +28,20 @@ class AbsenController extends Controller
     public function index(Request $request, Builder $htmlBuilder)
     {
         if ($request->ajax()) {
-            $absen = Absen::with('siswa', 'kelas');
-            return Datatables::of($absen)->make(true);
+            $absen = Siswa::where('status', false)->with('kelas');
+            return Datatables::of($absen)->addColumn('action', function($absen){
+                return view('materials._ket', [
+                'model'=> $absen,
+                'delete_url'=> route('absen.store')
+                ]);
+            })->make(true);
             }
             $html = $htmlBuilder
-            ->addColumn(['data' => 'siswa.nis', 'name'=>'siswa.nis', 'title'=>'NIS'])
-            ->addColumn(['data' => 'siswa.nama', 'name'=>'siswa.nama', 'title'=>'Nama'])
+            ->addColumn(['data' => 'nis', 'name'=>'siswa.nis', 'title'=>'NIS'])
+            ->addColumn(['data' => 'nama', 'name'=>'siswa.nama', 'title'=>'Nama'])
             ->addColumn(['data' => 'kelas.nama_kelas', 'name'=>'kelas.nama_kelas', 'title'=>'Kelas'])
-            ->addColumn(['data' => 'tanggal', 'name'=>'tanggal', 'title'=>'Tanggal'])
-            ->addColumn(['data' => 'jam_masuk', 'name'=>'jam_masuk', 'title'=>'Jam Masuk'])
-            ->addColumn(['data' => 'jam_pulang', 'name'=>'jam_pulang', 'title'=>'Jam Keluar']);            
-            
+            ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'', 'orderable'=>false, 'searchable'=>false]);
+
             return view('Absen.index')->with(compact('html'));
     }
     public function input(Request $request, Builder $htmlBuilder)
@@ -47,18 +50,18 @@ class AbsenController extends Controller
         $absen = Absen::all();
         // return view('Pegawai.create', compact('pegawai','jabatan'));
         if ($request->ajax()) {
-        $pegawai = Siswa::with(['absen']);               
+        $pegawai = Siswa::with(['absen']);
         return Datatables::of($pegawai)
         ->addColumn('action', function($pegawai){
             return view('materials._absen', [
-            'model'=> $pegawai,            
-            //  
+            'model'=> $pegawai,
+            //
             // 'keluar' => $pegawai->id,
             ]);
         }
         )
         ->make(true);
-    }    
+    }
     $html = $htmlBuilder
     ->addColumn(['data' => 'nis', 'name'=>'nis', 'title'=>'NIS'])
     ->addColumn(['data' => 'nama', 'name'=>'nama', 'title'=>'Nama']);
@@ -92,28 +95,36 @@ class AbsenController extends Controller
             ->addColumn(['data' => 'tanggal', 'name'=>'tanggal', 'title'=>'Tanggal'])
             ->addColumn(['data' => 'jam_masuk', 'name'=>'jam_masuk', 'title'=>'Jam Masuk'])
             ->addColumn(['data' => 'jam_pulang', 'name'=>'jam_pulang', 'title'=>'Jam Keluar'])
-            ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'keterangan']);            
-            
+            ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'keterangan']);
+
             return view('Absen.input')->with(compact('html', 'pegawai', 'cok'));
-        
+
 
     }
-    
+
     public function store(Request $request)
     {
-        //
-        $this->validate($request, 
-        ['tanggal' => 'required',
-        'keterangan' => 'required',
-        'siswa_id' => 'required']);
-        $kelas = Siswa::where('id', $request->siswa_id)->first();
-        $absen = new Absen();
-        $absen->tanggal = $request->tanggal;
-        $absen->siswa_id = $request->siswa_id;
-        $absen->kelas_id = $kelas->kelas_id;
-        $absen->keterangan = $request->keterangan;
-        $absen->save();
 
+        $dt = Carbon::now()->toTimeString();
+        $time = Carbon::now()->toDateString();
+        $absen = new Absen();
+        $siswa = Siswa::find($request->id);
+        $siswa->status = true;
+        if($request->hadir == "hadir"){
+            $absen->tanggal = $time;
+            $absen->jam_masuk = $dt;
+            $absen->keterangan = $request->hadir;
+            $absen->siswa_id = $request->id;
+            $absen->kelas_id = $siswa->kelas_id;
+            $absen->save();
+        }else{
+            $absen->tanggal = $time;
+            $absen->keterangan = $request->hadir;
+            $absen->siswa_id = $request->id;
+            $absen->kelas_id = $siswa->kelas_id;;
+            $absen->save();
+        }
+        $siswa->save();
         return back();
     }
     public function excel($id){

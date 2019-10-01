@@ -26,6 +26,7 @@ Route::resource('info', 'InfoController');
 Route::resource('tugas', 'TugasController');
 Route::resource('jurusan', 'JurusanController');
 Route::resource('absenguru', 'AbsenGuruController');
+Route::get('getsiswa/{id}', 'PiketController@getSiswa');
 Route::get('kehadiran','AbsenController@input')->name('absen.input');
 Route::get('absenkelas', 'AbsenController@kelas')->name('absen.kelas');
 Route::get('absenkelas/{id}', 'AbsenController@absen')->name('kelas');
