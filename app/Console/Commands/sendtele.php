@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Telegram;
 use App\Absen;
+use App\Siswa;
 use Telegram\Bot\FileUpload\InputFile;
+use Carbon\Carbon;
 
 
 class sendtele extends Command
@@ -41,21 +43,20 @@ class sendtele extends Command
      */
     public function handle()
     {
-            $time = "2019-08-29";
-            $absen = Absen::where('tanggal',$time)->with('siswa', 'kelas')->get();
-            foreach($absen as $data){
-                if($data->keterangan != "hadir"){
-                    $text = "Absen Tanggal: {$data->tanggal}\n"
-                            ."Nama: {$data->siswa->nama}\n"
-                            ."Kelas: {$data->kelas->nama_kelas}\n"
-                            ."Keterangan: {$data->keterangan}";
-                    Telegram::sendMessage([
-                        'chat_id' => -1001323023342,
-                        'parse_mode' => 'HTML',
-                        'text' => $text
-                    ]);
+                $time = Carbon::now()->toDateString();
+                $absen = Absen::where('tanggal',  $time)->with('siswa', 'kelas')->get();
+                foreach($absen as $data){
+                    if($data->keterangan != "hadir"){
+                        $text = "Absen Tanggal: {$data->tanggal}\n"
+                                ."Nama: {$data->siswa->nama}\n"
+                                ."Kelas: {$data->kelas->nama_kelas}\n"
+                                ."Keterangan: {$data->keterangan}";
+                        Telegram::sendMessage([
+                            'chat_id' => -371554893,
+                            'parse_mode' => 'HTML',
+                            'text' => $text
+                        ]);
+                    }
                 }
-        }
-
     }
 }

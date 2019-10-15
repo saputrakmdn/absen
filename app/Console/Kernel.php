@@ -27,7 +27,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
         $schedule->command('update:siswa')->dailyAt('22:00');
     }
 

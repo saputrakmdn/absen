@@ -5,6 +5,8 @@ use App\Siswa;
 use App\Absen;
 use App\Tugas;
 use App\Piket;
+use App\Kelas;
+use Telegram;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -51,6 +53,18 @@ class AbsenApiController extends Controller
         $siswa = Siswa::find($request->id);
         $siswa->status = true;
         $siswa->save();
+        $kelas = Kelas::where('id', $request->kelas)->first();
+        $text = "<b>Absen</b>\n"
+                                ."Tanggal: {$time}\n"
+                                ."Nama: {$siswa->nama}\n"
+                                ."NIS: {$siswa->nis}\n"
+                                ."Kelas: {$kelas->nama_kelas}\n"
+                                ."Keterangan: Hadir";
+        Telegram::sendMessage([
+            'chat_id' => -371554893,
+            'parse_mode' => 'HTML',
+            'text' => $text
+        ]);
         return $absen;
     }
     public function absenPulang(Request $request){
@@ -61,5 +75,11 @@ class AbsenApiController extends Controller
         if($absen){
             return $absen;
         }else{}
+    }
+
+    public function jancuk(){
+        $c = json_encode("Aku suka dia, dianya kaga");
+
+        return response()->json($c);
     }
 }

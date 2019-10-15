@@ -7,6 +7,7 @@ use App\Siswa;
 use App\Kelas;
 use Carbon\Carbon;
 use Excel;
+use Telegram;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Builder;
 use Yajra\Datatables\Datatables;
@@ -109,6 +110,7 @@ class AbsenController extends Controller
         $time = Carbon::now()->toDateString();
         $absen = new Absen();
         $siswa = Siswa::find($request->id);
+        $kelas = Kelas::where('id', $siswa->kelas_id)->first();
         $siswa->status = true;
         if($request->hadir == "hadir"){
             $absen->tanggal = $time;
@@ -124,6 +126,17 @@ class AbsenController extends Controller
             $absen->kelas_id = $siswa->kelas_id;;
             $absen->save();
         }
+        $text = "<b>Absen</b>\n"
+                                ."Tanggal: {$time}\n"
+                                ."Nama: {$siswa->nama}\n"
+                                ."NIS: {$siswa->nis}\n"
+                                ."Kelas: {$kelas->nama_kelas}\n"
+                                ."Keterangan: {$request->hadir}";
+        Telegram::sendMessage([
+            'chat_id' => -371554893,
+            'parse_mode' => 'HTML',
+            'text' => $text
+        ]);
         $siswa->save();
         return back();
     }
