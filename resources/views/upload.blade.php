@@ -28,6 +28,7 @@
                                     <input type="file" name="file1" class="form-control" required>
                                     <button type="submit" class="btn btn-primary "><span
                                         class="ti-check"></span>&nbsp;Upload</button>
+                                        <label class="control-label" style="color: red;">*penamaan file harus menggunakan format klaster-kelas-nama peserta, contoh="KLASTER1-XIITKJ1-SAPUTRAKAMANDANU"</label>
                                 </div>
                                 </form>
                                 <form action="{{ route('upload.store', ['slug' => 2]) }}" method="post" enctype="multipart/form-data">
@@ -38,6 +39,7 @@
                                     <input type="file" name="file1[]" class="form-control" multiple required>
                                     <button type="submit" class="btn btn-primary "><span
                                         class="ti-check"></span>&nbsp;Upload</button>
+                                        <label class="control-label" style="color: red;">*penamaan file harus menggunakan format klaster-kelas-nama peserta, contoh="KLASTER2-XIITKJ1-SAPUTRAKAMANDANU"</label>
                                 </div>
                                 </form>
                                 <form action="{{ route('upload.store', ['slug' => 3]) }}" method="post" enctype="multipart/form-data">
@@ -48,6 +50,7 @@
                                     <input type="file" name="file1" class="form-control" required>
                                     <button type="submit" class="btn btn-primary "><span
                                         class="ti-check"></span>&nbsp;Upload</button>
+                                        <label class="control-label" style="color: red;">*penamaan file harus menggunakan format klaster-kelas-nama peserta, contoh="KLASTER3-XIITKJ1-SAPUTRAKAMANDANU"</label>
                                 </div>
                                 </form>
                             </div>
