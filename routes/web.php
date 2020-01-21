@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'QRCode@index');
+Route::get('/', 'QRCode@index')->name('index');
+// Route::get('/', 'UkomController@index');
 
 Auth::routes();
 
@@ -32,6 +33,11 @@ Route::get('absenkelas', 'AbsenController@kelas')->name('absen.kelas');
 Route::get('absenkelas/{id}', 'AbsenController@absen')->name('kelas');
 Route::get('absen/excel/{id}', 'AbsenController@excel')->name('excel');
 Route::get('absen/excel/all/{id}', 'AbsenController@excelAll')->name('excel.all');
+Route::get('ukom', 'UkomController@index')->name('ukom.index');
+Route::get('upload', 'UkomController@upload')->name('ukom.upload');
+Route::post('upload', 'UkomController@uploadFile')->name('ukom.store');
+Route::get('uploadjawaban', 'QRCode@upload')->name('upload.index');
+Route::post('uploadjawaban/{slug}', 'QRCode@uploadFile')->name('upload.store');
 // Route::post('masuk','AbsenController@masuk')->name('absen.masuk');
 // Route::post('keluar','AbsenController@keluar')->name('absen.keluar');
 // Route::post('jam/{id}','AbsenController@jam')->name('absen.jam');

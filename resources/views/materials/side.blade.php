@@ -20,6 +20,18 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('ukom.upload') }}">
+                    <i class="ti-panel"></i>
+                    <p>Upload</p>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('ukom.index') }}">
+                    <i class="ti-panel"></i>
+                    <p>Jawaban Ukom</p>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('absen.kelas') }}">
                     <i class="ti-view-list"></i>
                     <p>Rekap Absen</p>
