@@ -15,20 +15,20 @@ class QRCode extends Controller
 {
     public function index(Request $request){
         // $activity = Telegram::getUpdates();
-        // // dd($activity);
-        // $time = Carbon::now()->toDateString();
-        // $waktu = Carbon::now()->format('H');
-        // $jam = Carbon::now()->toTimeString();
-        // $absen = Absen::where('tanggal', $time)->orderBy('id', 'DESC')->with('siswa', 'kelas')->get();
-        // $info = Info::all();
-        // $absenguru = AbsenGuru::where('tanggal', $time)->with('guru')->get();
-        // $piket = Piket::with(['siswa', 'kelas'])->get();
-        // $dt = base64_encode($time);
-        // if($request->ajax()){
-        //     return response()->json(array('absen'=>$absen));
-        //  }
+        // dd($activity);
+        $time = Carbon::now()->toDateString();
+        $waktu = Carbon::now()->format('H');
+        $jam = Carbon::now()->toTimeString();
+        $absen = Absen::where('tanggal', $time)->orderBy('id', 'DESC')->with('siswa', 'kelas')->get();
+        $info = Info::all();
+        $absenguru = AbsenGuru::where('tanggal', $time)->with('guru')->get();
+        $piket = Piket::with(['siswa', 'kelas'])->get();
+        $dt = base64_encode($time);
+        if($request->ajax()){
+            return response()->json(array('absen'=>$absen));
+         }
         $soal = SoalUkom::get();
-         return view('ukom', compact('soal'));
+        return view('welcome', compact('waktu', 'info', 'absenguru', 'piket', 'dt', 'absen'));
     }
 
     public function upload(){

@@ -202,7 +202,7 @@
         </div>
     </div>
     </main>
-    <footer class="navbar navbar-expand-sm bg-secondary navbar-secondary fixed-bottom">
+    <footer class="navbar navbar-expand-sm bg-secondary navbar-secondary">
       <div class="container">
       <div class="pull-left">
         <span class="text-light">Support By: <img src="{{asset('asset/logo/bestkj.png')}}" style="height:50px; width:50px; margin-left: 10px;"  alt="" srcset=""></span>
