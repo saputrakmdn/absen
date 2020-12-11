@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="refresh" content="200">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{{ asset('asset/Admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Absensi TKJ</title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <!-- Fonts -->
@@ -71,10 +71,23 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#"><img src="https://home.smkn5kabtangerangmauk.sch.id/wp-content/uploads/2020/07/LOGO-SMK-150x150.png" alt="" srcset="" style="width: 50px; height:50px;"><span class="font-weight-bolder m-2">SMKN 5 Kab. Tangerang</span></a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+     
+    </ul>
+    <div class=" my-2 my-lg-0 ">
+        <h2 class=" badge-pill badge-primary btn btn-primary btn-sm " id="date"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>Kamis, 11 Desember 2020</h2>
+        <h2 class=" badge-pill badge-danger btn btn-danger btn-sm" id="time"><i class="fa fa-clock-o mr-2" aria-hidden="true"></i>20:20</h2>
+    </div>
+  </div>
+    </nav>
+    <main>
     <div class="container-fluid">
-    <h1 class="text-center display-1" style="margin-top:50px;">Pusat Informasi TKJ SMKN 5 Kab. Tangerang</h1>
-        <div style="margin-top:20px;" class="row">
-            <div class="col-sm-4">
+    <p class="text-center display-4" style="margin-top:10px;">Pusat Informasi TKJ SMKN 5 Kab. Tangerang</p>
+        <div style="margin-top:10px;" class="row">
+            <div class="col-sm-6">
                 
                 @switch($waktu)
                 @case('06')
@@ -99,9 +112,9 @@
                 @break
                 @default
                 <pre style="background: #0258c9;"><p class="text-center h3">Informasi</p></pre>
-                <div style="height: 400px;margin: 0px auto 0px auto; overflow: auto; border: 3px solid black;">
+                <div style="height: 380px;margin: 0px auto 0px auto; overflow: auto; border: 3px solid black;">
                 @forelse($info as $data)
-                <h3 class="text-center display-3"><b>{{$data->judul}}</b></h3>
+                <!-- <h3 class="text-center display-3"><b>{{$data->judul}}</b></h3> -->
                 <pre>{!!$data->isi!!}</pre>           
                 <p class="text-center"><img src="file/{{$data->file}}" class="img-responsive"  alt="" srcset=""></p>
                 @empty
@@ -113,7 +126,7 @@
                 
                 
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <pre style="background: #0258c9;"><p class="text-center h3">Status Absen</p></pre>
                 <div style="height: 200px;margin: 0px auto 0px auto; overflow: auto;">
                     <table class="table table-striped table-bordered">
@@ -139,6 +152,7 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="row">
                 <div class="col-sm-6">
                 <pre style="background: #0258c9;"><p class="text-center h4">Piket Jurusan</p></pre>
                 <table class="table table-striped table-bordered">
@@ -178,30 +192,36 @@
                         </tbody>
                 </table>
                 </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    <footer class="footer" style="margin-top:40px;">
-        <div class="container-fluid">
-        <div class="pull-left">
-    Supported by:
-    <img src="{{asset('asset/logo/TKJ.png')}}" style="height:60px; width:50px; margin-right: 10px;"  alt="" srcset="">
-    <img src="{{asset('asset/logo/smkn5.png')}}"  alt="" style="height:50px; width:50px;"  srcset="">
-    <img src="{{asset('asset/logo/bestkj.png')}}" style="height:60px; width:60px; margin-left: 10px;"  alt="" srcset="">
-    </div>
-            <div class="copyright pull-right">
+    </main>
+    <footer class="navbar navbar-expand-sm bg-secondary navbar-secondary fixed-bottom">
+      <div class="container">
+      <div class="pull-left">
+        <span class="text-light">Support By: <img src="{{asset('asset/logo/bestkj.png')}}" style="height:50px; width:50px; margin-left: 10px;"  alt="" srcset=""></span>
+        </div>
+      </div>
+      <div class=" pull-right w-25 ">
+      <span class="text-light">
                 &copy;
                 <script>
                     document.write(new Date().getFullYear())
 
-                </script>, Created by Saputra Kamandanu.
+                </script>, Created by <a href="https://skmdn.com" style="text-decoration: none;color: inherit;" target="_blank">skmdn.com</a>.</span>
             </div>
         </div>
     </footer>
+ 
 </body>
-<script src="{{ asset('asset/Admin/assets/js/jquery.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('asset/Admin/assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
         setInterval(function () {
@@ -227,6 +247,84 @@
                 }
             })
         }, 1000);
+        var date = new Date();
+        var tahun = date.getFullYear();
+        var bulan = date.getMonth();
+        var tanggal = date.getDate();
+        var hari = date.getDay();
+        
+        switch (hari) {
+            case 0:
+                hari = "Minggu";
+                break;
+            case 1:
+                hari = "Senin";
+                break;
+            case 2:
+                hari = "Selasa";
+                break;
+            case 3:
+                hari = "Rabu";
+                break;
+            case 4:
+                hari = "Kamis";
+                break;
+            case 5:
+                hari = "Jum'at";
+                break;
+            case 6:
+                hari = "Sabtu";
+                break;
+        }
+        switch (bulan) {
+            case 0:
+                bulan = "Januari";
+                break;
+            case 1:
+                bulan = "Februari";
+                break;
+            case 2:
+                bulan = "Maret";
+                break;
+            case 3:
+                bulan = "April";
+                break;
+            case 4:
+                bulan = "Mei";
+                break;
+            case 5:
+                bulan = "Juni";
+                break;
+            case 6:
+                bulan = "Juli";
+                break;
+            case 7:
+                bulan = "Agustus";
+                break;
+            case 8:
+                bulan = "September";
+                break;
+            case 9:
+                bulan = "Oktober";
+                break;
+            case 10:
+                bulan = "November";
+                break;
+            case 11:
+                bulan = "Desember";
+                break;
+        }
+        var date = "<i class='fa fa-calendar mr-2' aria-hidden='true'></i>" + hari + ", " + tanggal + " " + bulan + " " + tahun;
+        
+        $('#date').html(date)
+        setInterval(function(){
+            var date = new Date();
+            var jam = date.getHours();
+            var menit = date.getMinutes();
+            var detik = date.getSeconds();
+            var tampilWaktu = "<i class='fa fa-clock-o mr-2' aria-hidden='true'></i>" + jam + ":" + menit + ":" + detik;
+            $('#time').html(tampilWaktu);
+        }, 1);
     });
 
 </script>
