@@ -30,7 +30,7 @@ class TugasController extends Controller
             // return Datatables::of($jabatan)->make(true);
             return Datatables::of($jabatan)
             ->addColumn('picture', function ($jabatan) {
-                return '<a href="tugass/'.$jabatan->file.'"style="width:100px;height:100px;">Download File</a>';
+                return '<a href="absen/public/tugass/'.$jabatan->file.'"style="width:100px;height:100px;">Download File</a>';
             })->addColumn('isi', function($jabatan){
                 return $jabatan->tugas;
             })
@@ -142,14 +142,14 @@ class TugasController extends Controller
         $jabatan->file = $filename;
         $jabatan->save();
         return redirect()->route('tugas.index');
-            }else{
+        }else{
                 $jabatan = Tugas::find($id);
                 $jabatan->nama_guru = $request->nama_guru;
                 $jabatan->kelas_id = $request->kelas_id;
                 $jabatan->tugas = $request->tugas;
             $jabatan->save();
             return redirect()->route('tugas.index');
-            }
+        }
     }
 
     /**

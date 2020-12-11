@@ -98,6 +98,10 @@
                 <p class="text-center h2">Scan Here</p>
                 <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
                 @break
+                @case('08')
+                <p class="text-center h2">Scan Here</p>
+                <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
+                @break
                 @case('15')
                 <p class="text-center h2">Scan Here</p>
                 <p class="text-center">{!! QrCode::size(380)->margin(1)->generate($dt); !!}</p>
@@ -122,9 +126,10 @@
                 @endforelse
                 </div>
                 @endswitch
+                <p class="text-center h3" id="txt"></p>
 
-                
-                
+
+
             </div>
             <div class="col-sm-6">
                 <pre style="background: #0258c9;"><p class="text-center h3">Status Absen</p></pre>
@@ -178,7 +183,7 @@
                             <tr>
                                 <th>Nama Guru</th>
                                 <th>Alasan</th>
-                                <th>Keteranagan</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -327,6 +332,38 @@
         }, 1);
     });
 
+</script>
+<script>
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  var y = today.getFullYear()
+  var b = today.getMonth();
+  var w = today.getDate();
+  m = checkTime(m);
+  s = checkTime(s);
+
+  var t = setTimeout(startTime, 500);
+  var d = new Date();
+  var weekday = new Array(7);
+  weekday[0] = "Minggu";
+  weekday[1] = "Senin";
+  weekday[2] = "Selasa";
+  weekday[3] = "Rabu";
+  weekday[4] = "Kamis";
+  weekday[5] = "Jumat";
+  weekday[6] = "Sabtu";
+
+  var n = weekday[d.getDay()];
+  document.getElementById('txt').innerHTML = "<b>"+n+","+w+"/"+b+"/"+y+"</b> - "+
+  h + ":" + m + ":" + s;
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
 </script>
 
 </html>
