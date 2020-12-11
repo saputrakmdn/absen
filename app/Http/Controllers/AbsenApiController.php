@@ -60,11 +60,11 @@ class AbsenApiController extends Controller
                                 ."NIS: {$siswa->nis}\n"
                                 ."Kelas: {$kelas->nama_kelas}\n"
                                 ."Keterangan: Hadir";
-        Telegram::sendMessage([
-            'chat_id' => -371554893,
-            'parse_mode' => 'HTML',
-            'text' => $text
-        ]);
+        // Telegram::sendMessage([
+        //     'chat_id' => -371554893,
+        //     'parse_mode' => 'HTML',
+        //     'text' => $text
+        // ]);
         return $absen;
     }
     public function absenPulang(Request $request){
